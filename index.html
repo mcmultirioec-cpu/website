@@ -158,23 +158,45 @@
   main {
     max-width: 1120px;
     margin: 0 auto;
-    padding: 2.75rem 1.5rem 4rem;
+    padding: 0.25rem 1.5rem 3rem;
   }
+
+  /* Secciones colapsables */
+  .seccion > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .seccion > summary::-webkit-details-marker { display: none; }
+
+  .chevron {
+    flex: none;
+    color: var(--petroleo);
+    transition: transform 0.15s;
+  }
+
+  .equipo .chevron { color: var(--turquesa); }
+  .seccion[open] > summary .chevron { transform: rotate(180deg); }
 
   /* Integrantes */
   .equipo {
     background: #0c1424;
     color: #fff;
-    padding: 2.75rem 0 3rem;
   }
+
+  .equipo + .equipo { border-top: 1px solid #27324d; }
+  .equipo .seccion[open] { padding-bottom: 2.25rem; }
 
   .equipo-interior {
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
-
-  .equipo h2 { margin-bottom: 1.5rem; }
 
   .carrusel { position: relative; }
 
@@ -280,15 +302,6 @@
   .flecha.anterior { left: 0.75rem; }
   .flecha.siguiente { right: 0.75rem; }
 
-  .listado-cabecera {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.75rem 2rem;
-    margin-bottom: 1.25rem;
-  }
-
   h2 {
     margin: 0;
     font-family: var(--titulos);
@@ -301,7 +314,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.375rem;
+    margin-bottom: 1rem;
   }
+
+  #filtros:empty { display: none; }
 
   #filtros button {
     font: inherit;
@@ -392,6 +408,46 @@
     color: var(--acero);
   }
 
+  /* Glosario */
+  .bloque-glosario {
+    margin-top: 0.875rem;
+    background: #141e36;
+    border: 1px solid #27324d;
+    border-radius: 10px;
+  }
+
+  .bloque-glosario:first-of-type { margin-top: 0; }
+
+  .bloque-glosario > summary {
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .termino { border-top: 1px solid #27324d; }
+
+  .termino > summary {
+    padding: 0.7rem 1.25rem 0.7rem 2.25rem;
+    font-weight: 600;
+    font-size: 0.975rem;
+    color: #e8eef6;
+    cursor: pointer;
+  }
+
+  .termino > summary:hover { color: var(--turquesa); }
+
+  .bloque-glosario > summary::marker,
+  .termino > summary::marker { color: var(--turquesa); }
+
+  .termino p {
+    margin: 0;
+    padding: 0 1.25rem 0.9rem 3.1rem;
+    max-width: 72ch;
+    color: #9aaac0;
+    font-size: 0.975rem;
+    line-height: 1.5;
+  }
+
   /* Visor a pantalla completa */
   #visor {
     width: 100vw;
@@ -468,9 +524,11 @@
     .cabecera-interior { grid-template-columns: minmax(0, 1fr); padding: 1.5rem 1rem 1.75rem; gap: 1.25rem; }
     .institucion { margin-bottom: 1.5rem; }
     #red { height: 260px; }
-    main { padding: 2rem 1rem 3rem; }
-    .equipo { padding: 2rem 0 2.25rem; }
+    main { padding: 0.25rem 1rem 2.5rem; }
     .equipo-interior { padding: 0 1rem; }
+    .bloque-glosario > summary { padding: 0.9rem 1rem; }
+    .termino > summary { padding: 0.7rem 1rem 0.7rem 1.75rem; }
+    .termino p { padding: 0 1rem 0.9rem 2.6rem; }
     .portal { grid-template-columns: minmax(0, 1fr); padding: 1rem; gap: 0.35rem; }
     .acciones { justify-content: flex-start; margin-top: 0.5rem; }
     .visor-barra a { display: none; }
@@ -510,28 +568,39 @@
   </div>
 </header>
 
-<section class="equipo" aria-labelledby="titulo-integrantes">
+<section class="equipo">
   <div class="equipo-interior">
-    <h2 id="titulo-integrantes">Integrantes</h2>
-    <div class="carrusel">
-      <button class="flecha anterior" id="anterior" type="button" aria-label="Integrante anterior" hidden>
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <ul id="integrantes"></ul>
-      <button class="flecha siguiente" id="siguiente" type="button" aria-label="Integrante siguiente" hidden>
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
+    <details class="seccion">
+      <summary><h2>Integrantes</h2><svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div class="carrusel">
+        <button class="flecha anterior" id="anterior" type="button" aria-label="Integrante anterior" hidden>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul id="integrantes"></ul>
+        <button class="flecha siguiente" id="siguiente" type="button" aria-label="Integrante siguiente" hidden>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="equipo">
+  <div class="equipo-interior">
+    <details class="seccion">
+      <summary><h2>Términos clave</h2><svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div id="glosario"></div>
+    </details>
   </div>
 </section>
 
 <main>
-  <div class="listado-cabecera">
-    <h2>Portales y dashboards</h2>
+  <details class="seccion" open>
+    <summary><h2>Portales y dashboards</h2><svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
     <div id="filtros" role="group" aria-label="Filtrar por tipo"></div>
-  </div>
-  <ul id="portales"></ul>
-  <p id="vacio" hidden>Todavía no hay portales publicados.</p>
+    <ul id="portales"></ul>
+    <p id="vacio" hidden>Todavía no hay portales publicados.</p>
+  </details>
 </main>
 
 <dialog id="visor" aria-labelledby="visor-titulo">
@@ -566,6 +635,16 @@ const INTEGRANTES = [
       { periodo: "2015–Actualidad", cargo: "Coordinadora de Estrategia de Cobranza - Produbanco" }
     ] 
   },
+  { nombre: "Carlos Chuncho", 
+    foto: "carlos-chuncho.png", 
+    titulo: "Maestrante, Ingeniero Ambiental, 38 años", 
+    trayectoria: [
+      { periodo: "", cargo: "Ingeniería Agronómica — Universidad Nacional de Loja, Ecuador." },
+      { periodo: "", cargo: "Maestría en Ciencias de la Agricultura — CATIE, Costa Rica." },
+      { periodo: "2017", cargo: "Maestría en Ciencias de la Ingeniería — Pontificia Universidad Católica de Chile." },
+      { periodo: "2025–Actualidad", cargo: "Maestría en Estadística, mención Ciencia de Datos e Inteligencia Artificial — ESPOCH, Ecuador." }
+    ]
+  },
   {
     nombre: "Marco Malán",
     foto: "marco-malan.jpg",
@@ -575,16 +654,6 @@ const INTEGRANTES = [
       { periodo: "2019–2021", cargo: "Maestría en Auditoría Informática" },
       { periodo: "2021–2023", cargo: "Oficial de Seguridad de la Información" },
       { periodo: "2023–2026", cargo: "Auditor informático" }
-    ]
-  },
-  { nombre: "Carlos Chuncho", 
-    foto: "carlos-chuncho.png", 
-    titulo: "Maestrante, Ingeniero Ambiental, 38 años", 
-    trayectoria: [
-      { periodo: "", cargo: "Ingeniería Agronómica — Universidad Nacional de Loja, Ecuador." },
-      { periodo: "", cargo: "Maestría en Ciencias de la Agricultura — CATIE, Costa Rica." },
-      { periodo: "2017", cargo: "Maestría en Ciencias de la Ingeniería — Pontificia Universidad Católica de Chile." },
-      { periodo: "2025–Actualidad", cargo: "Maestría en Estadística, mención Ciencia de Datos e Inteligencia Artificial — ESPOCH, Ecuador." }
     ]
   }
 ];
@@ -615,6 +684,45 @@ const PORTALES = [
   },
   
 
+];
+/* =====================================================================
+   GLOSARIO
+   Cada renglón es: ["Término", "Descripción"]
+   ===================================================================== */
+const GLOSARIO = [
+  {
+    grupo: "Redes neuronales recurrentes RNN",
+    terminos: [
+      ["RNN", "Red que procesa datos en secuencia y “recuerda” lo anterior mediante un estado oculto."],
+      ["Secuencia", "Datos ordenados en el tiempo, como la frecuencia cardíaca latido a latido."],
+      ["Estado oculto", "Memoria interna que se actualiza en cada paso de tiempo."],
+      ["LSTM", "RNN con compuertas que decide qué recordar y qué olvidar, útil en secuencias largas."],
+      ["GRU", "Versión simplificada de la LSTM, más rápida y con menos parámetros."],
+      ["Gradiente que se desvanece", "Problema de las RNN simples, que pierden información de pasos lejanos."]
+    ]
+  },
+  {
+    grupo: "Redes neuronales convolucionales 1D (CNN 1D)",
+    terminos: [
+      ["CNN 1D", "Red que desliza filtros sobre una serie para detectar patrones locales."],
+      ["Filtro (kernel)", "Ventana pequeña que busca un patrón, como un pico o una caída."],
+      ["Convolución", "Operación de deslizar el filtro por toda la señal."],
+      ["Pooling", "Reduce el tamaño de la señal conservando lo más importante."],
+      ["Mapa de características", "Salida que muestra dónde apareció el patrón."]
+    ]
+  },
+  {
+    grupo: "Conceptos comunes",
+    terminos: [
+      ["Ventana temporal", "Fragmento de la serie que se da como entrada a la red."],
+      ["Época", "Una pasada completa por los datos de entrenamiento."],
+      ["Batch", "Grupo de muestras procesadas a la vez."],
+      ["Sobreajuste", "La red memoriza los datos y falla con datos nuevos."],
+      ["Dropout", "Apaga neuronas al azar para reducir el sobreajuste."],
+      ["Función de pérdida", "Mide qué tan equivocada está la predicción."],
+      ["Validación", "Datos reservados para evaluar el modelo durante el entrenamiento."]
+    ]
+  }
 ];
 /* ===================== FIN DE LA ZONA EDITABLE ===================== */
 
@@ -799,6 +907,22 @@ function pintarIntegrantes() {
   });
 }
 
+function pintarGlosario() {
+  const contenedor = document.getElementById("glosario");
+  GLOSARIO.forEach(g => {
+    const bloque = elemento("details", "bloque-glosario");
+    bloque.open = true;
+    bloque.appendChild(elemento("summary", "", g.grupo));
+    g.terminos.forEach(([termino, descripcion]) => {
+      const item = elemento("details", "termino");
+      item.appendChild(elemento("summary", "", termino));
+      item.appendChild(elemento("p", "", descripcion));
+      bloque.appendChild(item);
+    });
+    contenedor.appendChild(bloque);
+  });
+}
+
 function pintarLista() {
   lista.textContent = "";
   const visibles = portales.filter(p => filtroActual === "Todos" || p.tipo === filtroActual);
@@ -901,6 +1025,7 @@ new ResizeObserver(actualizarFlechas).observe(pista);
 /* Inicio */
 pintarIntegrantes();
 actualizarFlechas();
+pintarGlosario();
 pintarFiltros();
 pintarLista();
 dibujarRed();
