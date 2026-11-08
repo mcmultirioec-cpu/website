@@ -33,15 +33,6 @@
     line-height: 1.55;
   }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
   a { color: var(--petroleo); }
 
   :focus-visible {
@@ -167,6 +158,85 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 2.75rem 1.5rem 4rem;
+  }
+
+  .equipo { margin-bottom: 3rem; }
+  .equipo h2 { margin-bottom: 1.25rem; }
+
+  #integrantes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    background: var(--papel);
+    border-top: 3px solid var(--pizarra);
+  }
+
+  .integrante {
+    padding: 1.5rem 1.25rem 1.75rem;
+    border-left: 1px solid var(--linea);
+  }
+
+  .integrante:first-child { border-left: 0; }
+
+  .foto {
+    width: 136px;
+    height: 136px;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: var(--niebla);
+    color: var(--acero);
+    font-family: var(--titulos);
+    font-size: 2.25rem;
+    font-weight: 500;
+  }
+
+  .foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .integrante h3 {
+    margin: 0 0 0.25rem;
+    font-family: var(--titulos);
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .integrante p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .integrante p.pendiente { color: var(--acero); }
+
+  .trayectoria {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+  }
+
+  .trayectoria li {
+    display: grid;
+    grid-template-columns: 5.25rem minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--linea);
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .periodo {
+    color: var(--acero);
+    font-variant-numeric: tabular-nums;
   }
 
   .listado-cabecera {
@@ -358,6 +428,9 @@
     .institucion { margin-bottom: 1.5rem; }
     #red { height: 260px; }
     main { padding: 2rem 1rem 3rem; }
+    #integrantes { grid-template-columns: minmax(0, 1fr); }
+    .integrante { border-left: 0; border-top: 1px solid var(--linea); padding: 1.25rem 1rem 1.5rem; }
+    .integrante:first-child { border-top: 0; }
     .portal { grid-template-columns: minmax(0, 1fr); padding: 1rem; gap: 0.35rem; }
     .acciones { justify-content: flex-start; margin-top: 0.5rem; }
     .visor-barra a { display: none; }
@@ -378,24 +451,23 @@
           <!-- Sube el logo al repositorio con este nombre exacto: logo-espoch.png -->
           <img src="logo-espoch.png" alt="Logo de la ESPOCH">
         </div>
-        <p>Escuela Superior Politécnica de Chimborazo</p>
+        <p>Maestría en Estadística - Mención ciencia de datos e IA</p>
       </div>
       <h1>Redes Neuronales y Deep Learning</h1>
       <p class="grupo">Grupo 4</p>
     </div>
     <div>
-      <h2 class="sr-only">Integrantes</h2>
-      <ul class="sr-only">
-        <li>Viviana Pujos</li>
-        <li>Carlos Chuncho</li>
-        <li>Marco Malán</li>
-      </ul>
       <div id="red" aria-hidden="true"></div>
     </div>
   </div>
 </header>
 
 <main>
+  <section class="equipo" aria-labelledby="titulo-integrantes">
+    <h2 id="titulo-integrantes">Integrantes</h2>
+    <ul id="integrantes"></ul>
+  </section>
+
   <div class="listado-cabecera">
     <h2>Portales y dashboards</h2>
     <div id="filtros" role="group" aria-label="Filtrar por tipo"></div>
@@ -417,6 +489,32 @@
 </dialog>
 
 <script>
+/* =====================================================================
+   DATOS DE LOS INTEGRANTES
+   Para completar una ficha, llena sus datos y sube la fotografía al
+   repositorio con el nombre exacto que indiques en "foto".
+
+   nombre       Nombre visible
+   foto         Archivo de la fotografía; con "" se muestran las iniciales
+   titulo       Título profesional
+   trayectoria  Un renglón por cada período: { periodo: "", cargo: "" }
+   ===================================================================== */
+const INTEGRANTES = [
+  {
+    nombre: "Marco Malán",
+    foto: "marco-malan.jpg",
+    titulo: "Ingeniero en Sistemas, graduado de la ESPOCH",
+    trayectoria: [
+      { periodo: "2019–2021", cargo: "Maestría en Auditoría Informática" },
+      { periodo: "2009–2020", cargo: "Coordinador de TIC" },
+      { periodo: "2021–2023", cargo: "Oficial de Seguridad de la Información" },
+      { periodo: "2023–2026", cargo: "Auditor informático" }
+    ]
+  },
+  { nombre: "Viviana Pujos", foto: "", titulo: "", trayectoria: [] },
+  { nombre: "Carlos Chuncho", foto: "", titulo: "", trayectoria: [] }
+];
+
 /* =====================================================================
    AGREGA AQUÍ TUS PORTALES
    Copia el bloque de ejemplo, quítale las marcas de comentario,
@@ -447,7 +545,6 @@ const PORTALES = [
 /* ===================== FIN DE LA ZONA EDITABLE ===================== */
 
 
-const INTEGRANTES = ["Viviana Pujos", "Carlos Chuncho", "Marco Malán"];
 const MAX_SALIDAS = 12;
 const svgNS = "http://www.w3.org/2000/svg";
 
@@ -522,7 +619,7 @@ function dibujarRed() {
     const nodo = crear("circle", { class: clase, cx: n.x, cy: n.y, r: c === 0 ? 7 : 6 }, svg);
     n.el = nodo;
     if (c === 0) {
-      crear("text", { class: "nombre", x: n.x - 16, y: n.y }, svg).textContent = INTEGRANTES[i];
+      crear("text", { class: "nombre", x: n.x - 16, y: n.y }, svg).textContent = INTEGRANTES[i].nombre;
     }
   }));
 
@@ -588,6 +685,44 @@ function elemento(etiqueta, clase, texto) {
   if (clase) el.className = clase;
   if (texto) el.textContent = texto;
   return el;
+}
+
+function pintarIntegrantes() {
+  const contenedor = document.getElementById("integrantes");
+  INTEGRANTES.forEach(i => {
+    const ficha = elemento("li", "integrante");
+
+    const iniciales = i.nombre.split(/\s+/).map(parte => parte[0]).join("").slice(0, 2);
+    const foto = elemento("div", "foto", i.foto ? "" : iniciales);
+    if (i.foto) {
+      const img = document.createElement("img");
+      img.src = i.foto;
+      img.alt = "Fotografía de " + i.nombre;
+      img.addEventListener("error", () => { foto.textContent = iniciales; });
+      foto.appendChild(img);
+    }
+    ficha.appendChild(foto);
+
+    ficha.appendChild(elemento("h3", "", i.nombre));
+    if (i.titulo) ficha.appendChild(elemento("p", "", i.titulo));
+
+    if (i.trayectoria.length) {
+      const lista = elemento("ul", "trayectoria");
+      i.trayectoria.forEach(t => {
+        const renglon = elemento("li");
+        renglon.appendChild(elemento("span", "periodo", t.periodo));
+        renglon.appendChild(elemento("span", "", t.cargo));
+        lista.appendChild(renglon);
+      });
+      ficha.appendChild(lista);
+    }
+
+    if (!i.titulo && !i.trayectoria.length) {
+      ficha.appendChild(elemento("p", "pendiente", "Datos por completar."));
+    }
+
+    contenedor.appendChild(ficha);
+  });
 }
 
 function pintarLista() {
@@ -668,6 +803,7 @@ document.getElementById("visor-cerrar").addEventListener("click", () => visor.cl
 visor.addEventListener("close", () => marco.removeAttribute("src"));
 
 /* Inicio */
+pintarIntegrantes();
 pintarFiltros();
 pintarLista();
 dibujarRed();
