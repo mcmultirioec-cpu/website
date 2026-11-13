@@ -408,6 +408,75 @@
     color: var(--acero);
   }
 
+  .descargas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .descargas span {
+    color: var(--acero);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .descarga {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--petroleo);
+    background: transparent;
+    border: 1px solid var(--petroleo);
+    border-radius: 3px;
+    text-decoration: none;
+  }
+
+  .descarga:hover { color: var(--papel); background: var(--petroleo); }
+
+  /* Videos de apoyo */
+  .seccion + .seccion { border-top: 1px solid var(--linea); }
+
+  #videos {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .video {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.25rem;
+    background: var(--papel);
+    border-top: 3px solid var(--petroleo);
+  }
+
+  .video .tipo { font-size: 0.875rem; }
+
+  .video h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .video p {
+    margin: 0 0 0.75rem;
+    color: var(--acero);
+    font-size: 0.925rem;
+    line-height: 1.45;
+  }
+
+  .video .boton { align-self: flex-start; margin-top: auto; }
+
   /* Glosario */
   .bloque-glosario {
     margin-top: 0.875rem;
@@ -601,6 +670,11 @@
     <ul id="portales"></ul>
     <p id="vacio" hidden>Todavía no hay portales publicados.</p>
   </details>
+
+  <details class="seccion">
+    <summary><h2>Videos de apoyo</h2><svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <ul id="videos"></ul>
+  </details>
 </main>
 
 <dialog id="visor" aria-labelledby="visor-titulo">
@@ -670,6 +744,8 @@ const INTEGRANTES = [
    fecha        Año-mes-día; los más recientes aparecen primero
    incrustar    true: se abre dentro de esta página (Shiny, reportes HTML)
                 false: se abre en otra pestaña (código en GitHub, Colab)
+   descargas    Opcional. Botones para descargar archivos del portal:
+                [{ texto: "Presentación", archivo: "descargas/archivo.pdf" }]
    ===================================================================== */
 const PORTALES = [
 
@@ -688,7 +764,11 @@ const PORTALES = [
     tipo: "Shiny",
     url: "https://vivianap.shinyapps.io/proyecto/",
     fecha: "2026-11-11",
-    incrustar: true
+    incrustar: true,
+    descargas: [
+      { texto: "Presentación", archivo: "https://drive.google.com/file/d/1eeNMoLkiVe34PlibIoq1y1kfBiO5vq8J/view?usp=sharing" },
+      { texto: "Base de datos", archivo: "https://docs.google.com/spreadsheets/d/1YorSzc5h6wl2soyvV5eFgeWAfB-tQeB0/edit?usp=sharing&ouid=113818342843251676047&rtpof=true&sd=true" }
+    ]
   },
   
 
@@ -730,6 +810,48 @@ const GLOSARIO = [
       ["Función de pérdida", "Mide qué tan equivocada está la predicción."],
       ["Validación", "Datos reservados para evaluar el modelo durante el entrenamiento."]
     ]
+  }
+];
+/* =====================================================================
+   VIDEOS DE APOYO
+   modelo  Tema del video; aparece arriba de cada tarjeta
+   idioma  "Español" o "Inglés"
+   ===================================================================== */
+const VIDEOS = [
+  {
+    modelo: "Regresión logística",
+    titulo: "StatQuest: Logistic Regression",
+    canal: "StatQuest with Josh Starmer",
+    idioma: "Inglés",
+    url: "https://www.youtube.com/watch?v=yIYKR4sgzI8"
+  },
+  {
+    modelo: "SimpleRNN",
+    titulo: "Redes Neuronales Recurrentes: explicación detallada",
+    canal: "Codificando Bits",
+    idioma: "Español",
+    url: "https://www.youtube.com/watch?v=hB4XYst_t-I"
+  },
+  {
+    modelo: "SimpleRNN",
+    titulo: "Recurrent Neural Networks (RNNs), Clearly Explained",
+    canal: "StatQuest with Josh Starmer",
+    idioma: "Inglés",
+    url: "https://www.youtube.com/watch?v=AsNTP8Kwu80"
+  },
+  {
+    modelo: "LSTM",
+    titulo: "Long Short-Term Memory (LSTM), Clearly Explained",
+    canal: "StatQuest with Josh Starmer",
+    idioma: "Inglés",
+    url: "https://www.youtube.com/watch?v=YCzL96nL7j0"
+  },
+  {
+    modelo: "Red convolucional",
+    titulo: "Redes Neuronales Convolucionales: clasificación avanzada de imágenes",
+    canal: "Ringa Tech",
+    idioma: "Español",
+    url: "https://www.youtube.com/watch?v=4sWhhQwHqug"
   }
 ];
 /* ===================== FIN DE LA ZONA EDITABLE ===================== */
@@ -931,6 +1053,23 @@ function pintarGlosario() {
   });
 }
 
+function pintarVideos() {
+  const contenedor = document.getElementById("videos");
+  VIDEOS.filter(v => v && v.titulo && urlValida(v.url)).forEach(v => {
+    const t = elemento("li", "video");
+    t.appendChild(elemento("div", "tipo", v.modelo));
+    t.appendChild(elemento("h3", "", v.titulo));
+    const detalle = [v.canal, v.idioma].filter(Boolean).join(", ");
+    if (detalle) t.appendChild(elemento("p", "", detalle));
+    const a = elemento("a", "boton", "Ver video");
+    a.href = v.url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    t.appendChild(a);
+    contenedor.appendChild(t);
+  });
+}
+
 function pintarLista() {
   lista.textContent = "";
   const visibles = portales.filter(p => filtroActual === "Todos" || p.tipo === filtroActual);
@@ -953,6 +1092,18 @@ function pintarLista() {
     const fecha = fechaLegible(p.fecha);
     const detalle = [p.descripcion, fecha].filter(Boolean).join(" ");
     if (detalle) info.appendChild(elemento("p", "", detalle));
+    const archivos = (p.descargas || []).filter(d => d && d.texto && urlValida(d.archivo));
+    if (archivos.length) {
+      const zona = elemento("div", "descargas");
+      zona.appendChild(elemento("span", "", "Descargas:"));
+      archivos.forEach(d => {
+        const a = elemento("a", "descarga", d.texto);
+        a.href = d.archivo;
+        a.setAttribute("download", "");
+        zona.appendChild(a);
+      });
+      info.appendChild(zona);
+    }
     fila.appendChild(info);
 
     const acciones = elemento("div", "acciones");
@@ -1034,6 +1185,7 @@ new ResizeObserver(actualizarFlechas).observe(pista);
 pintarIntegrantes();
 actualizarFlechas();
 pintarGlosario();
+pintarVideos();
 pintarFiltros();
 pintarLista();
 dibujarRed();
