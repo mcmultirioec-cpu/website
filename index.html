@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Redes Neuronales y Deep Learning, Grupo 4</title>
+<meta name="description" content="Proyectos, recursos y glosario del Grupo 4 en Redes Neuronales y Deep Learning, Maestría en Estadística de la ESPOCH.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Redes Neuronales y Deep Learning, Grupo 4">
+<meta property="og:description" content="Proyectos, recursos y glosario del Grupo 4, Maestría en Estadística, ESPOCH.">
+<meta property="og:url" content="https://mcmultirioec-cpu.github.io/website/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;600&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,6 +16,9 @@
   :root {
     --pizarra: #1e2b35;
     --pizarra-2: #2a3a46;
+    --noche: #0c1424;
+    --noche-2: #141e36;
+    --borde-noche: #27324d;
     --niebla: #e9edee;
     --papel: #fbfcfc;
     --grafito: #27323a;
@@ -21,9 +29,12 @@
     --turquesa: #2ec4b6;
     --titulos: "Bitter", Georgia, serif;
     --texto: "Libre Franklin", Arial, sans-serif;
+    --alto-barra: 60px;
   }
 
   * { box-sizing: border-box; }
+
+  html { scroll-padding-top: calc(var(--alto-barra) + 12px); }
 
   body {
     margin: 0;
@@ -41,18 +52,131 @@
     outline-offset: 2px;
   }
 
+  [hidden] { display: none !important; }
+
+  h2 {
+    margin: 0;
+    font-family: var(--titulos);
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  .contenedor {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .saltar {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    z-index: 30;
+    padding: 0.5rem 1rem;
+    background: var(--papel);
+    color: var(--pizarra);
+  }
+
+  .saltar:focus { top: 0.5rem; }
+
+  /* Barra de navegación */
+  .barra {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(30, 43, 53, 0.96);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid #33434f;
+  }
+
+  .barra .contenedor {
+    min-height: var(--alto-barra);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .marca {
+    color: var(--papel);
+    font-family: var(--titulos);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .marca span { color: var(--ocre); }
+
+  .menu {
+    display: flex;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .menu a {
+    display: block;
+    padding: 0.4rem 0.75rem;
+    color: #cfd8dd;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 3px;
+  }
+
+  .menu a:hover { color: #fff; background: var(--pizarra-2); }
+  .menu a[aria-current="true"] { color: #fff; box-shadow: inset 0 -2px 0 var(--ocre); border-radius: 0; }
+
+  .buscador {
+    position: relative;
+    margin-left: auto;
+    flex: 0 1 300px;
+    min-width: 0;
+  }
+
+  .buscador svg {
+    position: absolute;
+    left: 0.7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8fa1ac;
+    pointer-events: none;
+  }
+
+  #buscar {
+    width: 100%;
+    padding: 0.5rem 0.75rem 0.5rem 2.2rem;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--papel);
+    background: var(--pizarra-2);
+    border: 1px solid #3d4e5a;
+    border-radius: 4px;
+  }
+
+  #buscar::placeholder { color: #8fa1ac; }
+  #buscar:focus { outline: 2px solid var(--ocre); outline-offset: 0; border-color: transparent; }
+
+  #estado-busqueda {
+    margin: 0;
+    padding: 0.6rem 0;
+    color: var(--acero);
+    font-size: 0.95rem;
+  }
+
   /* Cabecera */
   .cabecera {
     background: var(--pizarra);
     color: var(--papel);
   }
 
-  .cabecera-interior {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem 2.5rem;
+  .cabecera .contenedor {
+    padding-top: 2.25rem;
+    padding-bottom: 2.5rem;
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: 2rem;
     align-items: center;
   }
@@ -61,13 +185,13 @@
     display: flex;
     align-items: center;
     gap: 0.875rem;
-    margin-bottom: 2.25rem;
+    margin-bottom: 2rem;
   }
 
   .logo {
     flex: none;
-    width: 72px;
-    height: 72px;
+    width: 68px;
+    height: 68px;
     padding: 6px;
     background: #fff;
     border-radius: 50%;
@@ -75,7 +199,7 @@
     place-items: center;
     overflow: hidden;
     color: var(--pizarra);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 600;
   }
 
@@ -102,77 +226,143 @@
   }
 
   .grupo {
-    margin: 0;
+    margin: 0 0 1.25rem;
     font-family: var(--titulos);
     font-weight: 500;
     font-size: 1.3rem;
     color: var(--ocre);
   }
 
+  .pista-red {
+    margin: 0;
+    max-width: 30rem;
+    color: #b7c4cc;
+    font-size: 0.95rem;
+  }
+
   #red {
     min-width: 0;
-    height: 320px;
+    height: 330px;
   }
 
   #red svg {
     display: block;
     width: 100%;
     height: 100%;
+    overflow: visible;
   }
 
   .arista {
     stroke: #fff;
-    stroke-opacity: 0.13;
+    stroke-opacity: 0.12;
     stroke-width: 1;
     transition: stroke-opacity 0.15s, stroke 0.15s;
   }
 
-  .arista.activa {
-    stroke: var(--ocre);
-    stroke-opacity: 0.85;
-  }
+  .arista.activa { stroke: var(--ocre); stroke-opacity: 0.85; }
 
-  .nodo {
-    fill: var(--pizarra-2);
-    stroke: #8fa1ac;
-    stroke-width: 1.5;
-  }
-
+  .nodo { fill: var(--pizarra-2); stroke: #8fa1ac; stroke-width: 1.5; }
   .nodo.entrada { fill: var(--papel); stroke: var(--papel); }
   .nodo.salida { fill: var(--ocre); stroke: var(--ocre); transition: r 0.15s; }
   .nodo.pendiente { fill: var(--pizarra); stroke: var(--ocre); stroke-dasharray: 3 3; }
   .nodo.salida.activa { r: 10px; }
 
-  .nombre {
+  .nombre, .nombre-salida {
     fill: var(--papel);
     font-family: var(--texto);
     font-size: 14px;
     font-weight: 500;
-    text-anchor: end;
     dominant-baseline: central;
   }
 
+  .nombre { text-anchor: end; }
+  .nombre-salida { fill: #e4ebef; font-size: 13.5px; }
+
+  .salida-enlace { cursor: pointer; }
+  .salida-enlace:hover .nombre-salida,
+  .salida-enlace:focus .nombre-salida,
+  .salida-enlace.activa .nombre-salida { fill: var(--ocre); text-decoration: underline; }
+  .salida-enlace:focus { outline: none; }
+  .salida-enlace:focus-visible .nodo { stroke: #fff; stroke-width: 3; }
+
   .pulso { fill: var(--ocre); }
 
-  /* Listado */
-  main {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0.25rem 1.5rem 3rem;
+  /* Secciones */
+  main .seccion { padding: 3rem 0 0.5rem; }
+  main .seccion:last-child { padding-bottom: 3.5rem; }
+
+  .cabeza-seccion {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    margin-bottom: 1.25rem;
   }
 
-  /* Secciones colapsables */
-  .seccion > summary {
+  .cabeza-seccion p {
+    margin: 0.35rem 0 0;
+    color: var(--acero);
+    font-size: 0.975rem;
+  }
+
+  .filtros {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.25rem 0;
-    list-style: none;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .filtros:empty { display: none; }
+
+  .filtros button {
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.8rem;
+    color: var(--grafito);
+    background: transparent;
+    border: 1px solid #aeb9bf;
+    border-radius: 3px;
     cursor: pointer;
   }
 
-  .seccion > summary::-webkit-details-marker { display: none; }
+  .filtros button:hover { border-color: var(--pizarra); }
+
+  .filtros button[aria-pressed="true"] {
+    background: var(--pizarra);
+    border-color: var(--pizarra);
+    color: var(--papel);
+  }
+
+  .vacio {
+    margin: 0;
+    padding: 1.5rem 1.25rem;
+    background: var(--papel);
+    color: var(--acero);
+  }
+
+  .boton {
+    display: inline-block;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem 1.05rem;
+    color: var(--papel);
+    background: var(--petroleo);
+    border: 1px solid var(--petroleo);
+    border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .boton:hover { background: var(--pizarra); border-color: var(--pizarra); }
+
+  .boton.secundario {
+    color: var(--petroleo);
+    background: transparent;
+  }
+
+  .boton.secundario:hover { color: var(--papel); background: var(--petroleo); border-color: var(--petroleo); }
 
   .chevron {
     flex: none;
@@ -180,23 +370,307 @@
     transition: transform 0.15s;
   }
 
-  .equipo .chevron { color: var(--turquesa); }
-  .seccion[open] > summary .chevron { transform: rotate(180deg); }
+  details[open] > summary .chevron { transform: rotate(180deg); }
 
-  /* Integrantes */
+  summary { list-style: none; cursor: pointer; }
+  summary::-webkit-details-marker { display: none; }
+
+  .tipo {
+    color: var(--petroleo);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* Fichas de proyecto */
+  #lista-proyectos {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .ficha {
+    background: var(--papel);
+    border-top: 3px solid var(--petroleo);
+    transition: box-shadow 0.4s;
+  }
+
+  .ficha.resaltada { box-shadow: 0 0 0 3px var(--ocre); }
+
+  .ficha-cabeza {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem 2rem;
+    align-items: start;
+    padding: 1.5rem 1.5rem 1.25rem;
+  }
+
+  .ficha-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.9rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+  }
+
+  .estado {
+    padding: 0.1rem 0.55rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 3px;
+  }
+
+  .estado.publicado { color: #17505b; background: #d8ecee; }
+  .estado.propuesta { color: #6d531a; background: #f4e8c8; }
+  .estado.otro { color: var(--acero); background: var(--niebla); }
+
+  .fecha { color: var(--acero); }
+
+  .ficha h3 {
+    margin: 0;
+    font-family: var(--titulos);
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .cifras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cifras li {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--linea);
+  }
+
+  .cifras strong {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cifras span {
+    color: var(--acero);
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+
+  .ficha .acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .ficha-mas { border-top: 1px solid var(--linea); }
+
+  .ficha-mas > summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    color: var(--petroleo);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .ficha-mas > summary:hover { background: #f1f4f5; }
+
+  .ficha-cuerpo {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: 1.5rem 2.5rem;
+    padding: 0.5rem 1.5rem 1.75rem;
+  }
+
+  .ficha-cuerpo > p {
+    margin: 0;
+    max-width: 66ch;
+    color: var(--grafito);
+    font-size: 0.975rem;
+    line-height: 1.6;
+  }
+
+  .recursos { display: grid; gap: 1.25rem; align-content: start; }
+
+  .recursos h4 {
+    margin: 0 0 0.5rem;
+    color: var(--acero);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .botones-chicos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 0.28rem 0.7rem;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--petroleo);
+    background: transparent;
+    border: 1px solid #9fb8bd;
+    border-radius: 3px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .chip:hover { color: var(--papel); background: var(--petroleo); border-color: var(--petroleo); }
+
+  .videos-relacionados {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .videos-relacionados li + li { border-top: 1px solid var(--linea); }
+
+  .videos-relacionados a {
+    display: grid;
+    gap: 0.05rem;
+    padding: 0.45rem 0;
+    text-decoration: none;
+  }
+
+  .videos-relacionados a span:first-child { font-weight: 500; font-size: 0.95rem; }
+  .videos-relacionados a span:last-child { color: var(--acero); font-size: 0.85rem; }
+  .videos-relacionados a:hover span:first-child { text-decoration: underline; }
+
+  /* Videos */
+  #lista-videos {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .video {
+    background: var(--papel);
+    border-top: 3px solid var(--petroleo);
+  }
+
+  .video.resaltada { box-shadow: 0 0 0 3px var(--ocre); }
+
+  .video > summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 8rem;
+    padding: 1.25rem;
+  }
+
+  .video > summary > div { display: grid; gap: 0.3rem; }
+  .video > summary:hover h3 { color: var(--petroleo); }
+  .video .chevron { margin-top: 0.1rem; }
+
+  .video h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .video-cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .miniatura {
+    display: block;
+    margin-bottom: 0.5rem;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--niebla);
+    border-radius: 3px;
+  }
+
+  .miniatura img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-cuerpo p {
+    margin: 0 0 0.75rem;
+    color: var(--acero);
+    font-size: 0.925rem;
+    line-height: 1.45;
+  }
+
+  .video-cuerpo .boton { align-self: flex-start; }
+
+  /* Glosario */
+  #lista-glosario {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .bloque-glosario {
+    background: var(--papel);
+    border-top: 3px solid var(--pizarra);
+  }
+
+  .bloque-glosario h3 {
+    margin: 0;
+    padding: 1.1rem 1.25rem 0.75rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .termino { border-top: 1px solid var(--linea); }
+  .termino.resaltada { background: #fbf4e2; }
+
+  .termino > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.65rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.975rem;
+  }
+
+  .termino > summary:hover { color: var(--petroleo); }
+  .termino .chevron { width: 16px; height: 16px; }
+
+  .termino p {
+    margin: 0;
+    padding: 0 1.25rem 0.9rem;
+    color: var(--acero);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* Equipo y pie */
   .equipo {
-    background: #0c1424;
+    background: var(--noche);
     color: #fff;
+    padding: 3rem 0 2.75rem;
   }
 
-  .equipo + .equipo { border-top: 1px solid #27324d; }
-  .equipo .seccion[open] { padding-bottom: 2.25rem; }
-
-  .equipo-interior {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
+  .equipo h2 { margin-bottom: 1.5rem; }
 
   .carrusel { position: relative; }
 
@@ -216,16 +690,16 @@
   .integrante {
     flex: 0 0 calc((100% - 2.5rem) / 3);
     scroll-snap-align: start;
-    padding: 2.5rem 1.5rem 2rem;
-    background: #141e36;
-    border: 1px solid #27324d;
+    padding: 2.25rem 1.5rem 2rem;
+    background: var(--noche-2);
+    border: 1px solid var(--borde-noche);
     border-radius: 14px;
     text-align: center;
   }
 
   .foto {
-    width: 136px;
-    height: 136px;
+    width: 128px;
+    height: 128px;
     margin: 0 auto 1.25rem;
     border: 3px solid var(--turquesa);
     border-radius: 50%;
@@ -234,7 +708,7 @@
     place-items: center;
     background: #1a2542;
     color: #dbe4f0;
-    font-size: 2.25rem;
+    font-size: 2.1rem;
     font-weight: 500;
   }
 
@@ -247,7 +721,6 @@
 
   .integrante h3 {
     margin: 0 0 0.5rem;
-    font-family: var(--texto);
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.25;
@@ -256,7 +729,6 @@
   .integrante p {
     margin: 0;
     color: #9aaac0;
-    font-size: 1rem;
     line-height: 1.5;
   }
 
@@ -283,7 +755,7 @@
 
   .flecha {
     position: absolute;
-    top: 88px;
+    top: 80px;
     z-index: 1;
     width: 40px;
     height: 40px;
@@ -297,227 +769,30 @@
     cursor: pointer;
   }
 
-  .flecha[hidden] { display: none; }
   .flecha:disabled { opacity: 0.45; cursor: default; }
   .flecha.anterior { left: 0.75rem; }
   .flecha.siguiente { right: 0.75rem; }
 
-  h2 {
-    margin: 0;
-    font-family: var(--titulos);
-    font-weight: 600;
-    font-size: 1.6rem;
-    line-height: 1.2;
-  }
-
-  #filtros {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-    margin-bottom: 1rem;
-  }
-
-  #filtros:empty { display: none; }
-
-  #filtros button {
-    font: inherit;
-    font-size: 0.9rem;
-    padding: 0.3rem 0.8rem;
-    color: var(--grafito);
-    background: transparent;
-    border: 1px solid #aeb9bf;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-
-  #filtros button[aria-pressed="true"] {
-    background: var(--pizarra);
-    border-color: var(--pizarra);
-    color: var(--papel);
-  }
-
-  #portales {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    background: var(--papel);
-    border-top: 3px solid var(--pizarra);
-  }
-
-  .portal {
-    display: grid;
-    grid-template-columns: 7rem minmax(0, 1fr) auto;
-    gap: 0.25rem 1.5rem;
-    align-items: center;
-    padding: 1.25rem;
-    border-bottom: 1px solid var(--linea);
-  }
-
-  .portal:hover, .portal:focus-within { background: #f1f4f5; }
-
-  .tipo {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--petroleo);
-  }
-
-  .portal h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .portal p {
-    margin: 0.2rem 0 0;
-    max-width: 62ch;
-    color: var(--acero);
-    font-size: 0.95rem;
-  }
-
-  .acciones {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.5rem 1rem;
-  }
-
-  .boton {
-    font: inherit;
-    font-size: 0.95rem;
-    font-weight: 500;
-    padding: 0.45rem 1rem;
-    color: var(--papel);
-    background: var(--petroleo);
-    border: 1px solid var(--petroleo);
-    border-radius: 3px;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .boton:hover { background: var(--pizarra); border-color: var(--pizarra); }
-
-  .enlace { font-size: 0.95rem; }
-
-  #vacio {
-    margin: 0;
-    padding: 2.5rem 1.25rem;
-    background: var(--papel);
-    border-top: 3px solid var(--pizarra);
-    color: var(--acero);
-  }
-
-  .descargas {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-  }
-
-  .descargas span {
-    color: var(--acero);
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
-  .descarga {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.3rem 0.75rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--petroleo);
-    background: transparent;
-    border: 1px solid var(--petroleo);
-    border-radius: 3px;
-    text-decoration: none;
-  }
-
-  .descarga:hover { color: var(--papel); background: var(--petroleo); }
-
-  /* Videos de apoyo */
-  .seccion + .seccion { border-top: 1px solid var(--linea); }
-
-  #videos {
-    list-style: none;
-    margin: 0 0 1.5rem;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
-  }
-
-  .video {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    padding: 1.25rem;
-    background: var(--papel);
-    border-top: 3px solid var(--petroleo);
-  }
-
-  .video .tipo { font-size: 0.875rem; }
-
-  .video h3 {
-    margin: 0;
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1.3;
-  }
-
-  .video p {
-    margin: 0 0 0.75rem;
-    color: var(--acero);
-    font-size: 0.925rem;
-    line-height: 1.45;
-  }
-
-  .video .boton { align-self: flex-start; margin-top: auto; }
-
-  /* Glosario */
-  .bloque-glosario {
-    margin-top: 0.875rem;
-    background: #141e36;
-    border: 1px solid #27324d;
-    border-radius: 10px;
-  }
-
-  .bloque-glosario:first-of-type { margin-top: 0; }
-
-  .bloque-glosario > summary {
-    padding: 1rem 1.25rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .termino { border-top: 1px solid #27324d; }
-
-  .termino > summary {
-    padding: 0.7rem 1.25rem 0.7rem 2.25rem;
-    font-weight: 600;
-    font-size: 0.975rem;
-    color: #e8eef6;
-    cursor: pointer;
-  }
-
-  .termino > summary:hover { color: var(--turquesa); }
-
-  .bloque-glosario > summary::marker,
-  .termino > summary::marker { color: var(--turquesa); }
-
-  .termino p {
-    margin: 0;
-    padding: 0 1.25rem 0.9rem 3.1rem;
-    max-width: 72ch;
+  .pie {
+    background: var(--noche);
     color: #9aaac0;
-    font-size: 0.975rem;
-    line-height: 1.5;
+    border-top: 1px solid var(--borde-noche);
+    font-size: 0.925rem;
   }
 
-  /* Visor a pantalla completa */
+  .pie .contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .pie p { margin: 0; }
+  .pie a { color: #dbe4f0; }
+
+  /* Visor */
   #visor {
     width: 100vw;
     height: 100vh;
@@ -530,10 +805,7 @@
     background: var(--pizarra);
   }
 
-  #visor[open] {
-    display: flex;
-    flex-direction: column;
-  }
+  #visor[open] { display: flex; flex-direction: column; }
 
   .visor-barra {
     display: flex;
@@ -573,11 +845,7 @@
     background: var(--niebla);
   }
 
-  .visor-cuerpo p {
-    margin: 0;
-    padding: 2rem;
-    color: var(--acero);
-  }
+  .visor-cuerpo p { margin: 0; padding: 2rem; color: var(--acero); }
 
   #visor-marco {
     position: absolute;
@@ -589,37 +857,65 @@
 
   #visor-marco.cargado { background: #fff; }
 
-  @media (max-width: 800px) {
-    .cabecera-interior { grid-template-columns: minmax(0, 1fr); padding: 1.5rem 1rem 1.75rem; gap: 1.25rem; }
-    .institucion { margin-bottom: 1.5rem; }
-    #red { height: 260px; }
-    main { padding: 0.25rem 1rem 2.5rem; }
-    .equipo-interior { padding: 0 1rem; }
-    .bloque-glosario > summary { padding: 0.9rem 1rem; }
-    .termino > summary { padding: 0.7rem 1rem 0.7rem 1.75rem; }
-    .termino p { padding: 0 1rem 0.9rem 2.6rem; }
-    .portal { grid-template-columns: minmax(0, 1fr); padding: 1rem; gap: 0.35rem; }
-    .acciones { justify-content: flex-start; margin-top: 0.5rem; }
-    .visor-barra a { display: none; }
-  }
-
   @media (max-width: 960px) {
     .integrante { flex-basis: calc((100% - 1.25rem) / 2); }
+    #lista-glosario { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .menu a { padding: 0.4rem 0.5rem; }
+  }
+
+  @media (max-width: 800px) {
+    :root { --alto-barra: 104px; }
+    .barra .contenedor { flex-wrap: wrap; gap: 0.4rem 1rem; padding-top: 0.5rem; padding-bottom: 0.6rem; }
+    .menu { order: 3; width: 100%; overflow-x: auto; }
+    .buscador { flex: 1 1 160px; }
+    .contenedor { padding: 0 1rem; }
+    .cabecera .contenedor { grid-template-columns: minmax(0, 1fr); padding-top: 1.5rem; padding-bottom: 1.75rem; gap: 1.25rem; }
+    .institucion { margin-bottom: 1.5rem; }
+    #red { height: 280px; }
+    main .seccion { padding-top: 2.25rem; }
+    h2 { font-size: 1.5rem; }
+    .ficha-cabeza { grid-template-columns: minmax(0, 1fr); padding: 1.25rem 1rem 1rem; }
+    .ficha .acciones { justify-content: flex-start; }
+    .ficha-mas > summary { padding: 0.8rem 1rem; }
+    .ficha-cuerpo { grid-template-columns: minmax(0, 1fr); padding: 0.25rem 1rem 1.5rem; }
+    .video > summary { min-height: 0; }
+    #lista-glosario { grid-template-columns: minmax(0, 1fr); }
+    .visor-barra a { display: none; }
   }
 
   @media (max-width: 640px) {
     .integrante { flex-basis: 100%; }
+    .marca { font-size: 1rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
 <body>
 
-<header class="cabecera">
-  <div class="cabecera-interior">
+<a class="saltar" href="#proyectos">Ir a los proyectos</a>
+
+<nav class="barra" aria-label="Secciones">
+  <div class="contenedor">
+    <a class="marca" href="#inicio">Grupo <span>4</span></a>
+    <ul class="menu">
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#glosario">Glosario</a></li>
+      <li><a href="#equipo">Equipo</a></li>
+    </ul>
+    <div class="buscador">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m11 11 3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <input id="buscar" type="search" placeholder="Buscar: LSTM, incendios, AUC…" aria-label="Buscar en proyectos, videos y términos" autocomplete="off">
+    </div>
+  </div>
+</nav>
+
+<header class="cabecera" id="inicio">
+  <div class="contenedor">
     <div>
       <div class="institucion">
         <div class="logo" id="logo">
@@ -630,52 +926,74 @@
       </div>
       <h1>Redes Neuronales y Deep Learning</h1>
       <p class="grupo">Grupo 4</p>
+      <p class="pista-red">Cada integrante es una entrada de la red y cada proyecto, una salida. Haz clic en un proyecto para ir a su ficha.</p>
     </div>
-    <div>
-      <div id="red" aria-hidden="true"></div>
-    </div>
+    <div id="red"></div>
   </div>
 </header>
 
-<section class="equipo">
-  <div class="equipo-interior">
-    <details class="seccion">
-      <summary><h2>Integrantes</h2><svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-      <div class="carrusel">
-        <button class="flecha anterior" id="anterior" type="button" aria-label="Integrante anterior" hidden>
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <ul id="integrantes"></ul>
-        <button class="flecha siguiente" id="siguiente" type="button" aria-label="Integrante siguiente" hidden>
-          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+<main id="contenido">
+  <div class="contenedor">
+    <p id="estado-busqueda" aria-live="polite" hidden></p>
+
+    <section class="seccion" id="proyectos" aria-labelledby="titulo-proyectos">
+      <div class="cabeza-seccion">
+        <div>
+          <h2 id="titulo-proyectos">Proyectos</h2>
+          <p>Aplicaciones, documentos y recursos de cada trabajo.</p>
+        </div>
+        <div class="filtros" id="filtros-proyectos" role="group" aria-label="Filtrar proyectos por tipo"></div>
       </div>
-    </details>
+      <div id="lista-proyectos"></div>
+      <p class="vacio" id="sin-proyectos" hidden>Ningún proyecto coincide con la búsqueda.</p>
+    </section>
+
+    <section class="seccion" id="videos" aria-labelledby="titulo-videos">
+      <div class="cabeza-seccion">
+        <div>
+          <h2 id="titulo-videos">Videos de apoyo</h2>
+          <p>Haz clic en un video para ver su miniatura y abrirlo.</p>
+        </div>
+        <div class="filtros" id="filtros-videos" role="group" aria-label="Filtrar videos por tema"></div>
+      </div>
+      <ul id="lista-videos"></ul>
+      <p class="vacio" id="sin-videos" hidden>Ningún video coincide con la búsqueda.</p>
+    </section>
+
+    <section class="seccion" id="glosario" aria-labelledby="titulo-glosario">
+      <div class="cabeza-seccion">
+        <div>
+          <h2 id="titulo-glosario">Términos clave</h2>
+          <p>Haz clic en un término para ver su definición.</p>
+        </div>
+      </div>
+      <div id="lista-glosario"></div>
+      <p class="vacio" id="sin-terminos" hidden>Ningún término coincide con la búsqueda.</p>
+    </section>
   </div>
-</section>
-
-<section class="equipo">
-  <div class="equipo-interior">
-    <details class="seccion">
-      <summary><h2>Términos clave</h2><svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-      <div id="glosario"></div>
-    </details>
-  </div>
-</section>
-
-<main>
-  <details class="seccion" open>
-    <summary><h2>Portales y dashboards</h2><svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-    <div id="filtros" role="group" aria-label="Filtrar por tipo"></div>
-    <ul id="portales"></ul>
-    <p id="vacio" hidden>Todavía no hay portales publicados.</p>
-  </details>
-
-  <details class="seccion">
-    <summary><h2>Videos de apoyo</h2><svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-    <ul id="videos"></ul>
-  </details>
 </main>
+
+<section class="equipo" id="equipo" aria-labelledby="titulo-equipo">
+  <div class="contenedor">
+    <h2 id="titulo-equipo">Integrantes</h2>
+    <div class="carrusel">
+      <button class="flecha anterior" id="anterior" type="button" aria-label="Integrante anterior" hidden>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul id="integrantes"></ul>
+      <button class="flecha siguiente" id="siguiente" type="button" aria-label="Integrante siguiente" hidden>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p>Redes Neuronales y Deep Learning, Maestría en Estadística, ESPOCH.</p>
+    <p><span id="actualizado"></span> <a href="https://github.com/mcmultirioec-cpu/website" target="_blank" rel="noopener">Ver el repositorio</a></p>
+  </div>
+</footer>
 
 <dialog id="visor" aria-labelledby="visor-titulo">
   <div class="visor-barra">
@@ -685,112 +1003,122 @@
   </div>
   <div class="visor-cuerpo">
     <p>Cargando. Un dashboard de Shiny puede tardar unos segundos en iniciar.</p>
-    <iframe id="visor-marco" title="Portal seleccionado" allow="fullscreen"></iframe>
+    <iframe id="visor-marco" title="Proyecto seleccionado" allow="fullscreen"></iframe>
   </div>
 </dialog>
 
 <script>
 /* =====================================================================
-   DATOS DE LOS INTEGRANTES
-   Para completar una ficha, llena sus datos y sube la fotografía al
-   repositorio con el nombre exacto que indiques en "foto".
-
-   nombre       Nombre visible
-   foto         Archivo de la fotografía; con "" se muestran las iniciales
-   titulo       Título profesional
-   trayectoria  Un renglón por cada período: { periodo: "", cargo: "" }
+   ZONA EDITABLE
+   Todo el contenido del portal está en estas listas. Para agregar algo,
+   copia un bloque existente, cambia sus datos y deja una coma entre
+   bloques.
    ===================================================================== */
-const INTEGRANTES = [
-  { nombre: "Viviana Pujos", 
-    foto: "viviana-pujos.jpeg", 
-    titulo: "Maestrante, Ingeniera Matemática, Universidad Central, 38 años", 
-    trayectoria: [
-      { periodo: "2013–2015", cargo: "Coordinadora Nacional Registro Social" },
-      { periodo: "2015–Actualidad", cargo: "Coordinadora de Estrategia de Cobranza - Produbanco" }
-    ] 
-  },
-  { nombre: "Carlos Chuncho", 
-    foto: "carlos-chuncho.png", 
-    titulo: "Maestrante, Ingeniero Ambiental, 38 años", 
-    trayectoria: [
-      { periodo: "", cargo: "Ingeniería Agronómica — Universidad Nacional de Loja, Ecuador." },
-      { periodo: "", cargo: "Maestría en Ciencias de la Agricultura — CATIE, Costa Rica." },
-      { periodo: "2017", cargo: "Maestría en Ciencias de la Ingeniería — Pontificia Universidad Católica de Chile." },
-      { periodo: "2025–Actualidad", cargo: "Maestría en Estadística, mención Ciencia de Datos e Inteligencia Artificial — ESPOCH, Ecuador." }
-    ]
-  },
-  {
-    nombre: "Marco Malán",
-    foto: "marco-malan.jpg",
-    titulo: "Maestrante, Ingeniero en sistemas, 44 años",
-    trayectoria: [
-      { periodo: "2009–2020", cargo: "Coordinador de TIC" },  
-      { periodo: "2019–2021", cargo: "Maestría en Auditoría Informática" },
-      { periodo: "2021–2023", cargo: "Oficial de Seguridad de la Información" },
-      { periodo: "2023–2026", cargo: "Auditor informático" }
-    ]
-  }
-];
 
-/* =====================================================================
-   AGREGA AQUÍ TUS PORTALES
-   Copia el bloque de ejemplo, quítale las marcas de comentario,
-   cambia los datos y deja una coma entre un portal y otro.
-
-   titulo       Nombre visible del portal
-   descripcion  Una frase sobre su contenido (puede quedar "")
-   tipo         Shiny, Python, R, Notebook, Reporte... crea los filtros solo
-   url          Enlace completo, o ruta dentro del repositorio
+/* ---------------------------------------------------------------------
+   PROYECTOS
+   id           Identificador corto, sin espacios ni tildes
+   corto        Nombre breve que aparece en la red de la cabecera
+   titulo       Nombre completo del proyecto
+   tipo         Shiny, Investigación, Python, R... crea los filtros solo
+   estado       "Publicado", "Propuesta" u otro texto
    fecha        Año-mes-día; los más recientes aparecen primero
-   incrustar    true: se abre dentro de esta página (Shiny, reportes HTML)
-                false: se abre en otra pestaña (código en GitHub, Colab)
-   descargas    Opcional. Botones para descargar archivos del portal:
-                [{ texto: "Presentación", archivo: "descargas/archivo.pdf" }]
-   ===================================================================== */
-const PORTALES = [
-
-  
+   cifras       Dos o tres datos clave: ["valor", "qué significa"]
+   descripcion  Resumen del proyecto
+   url          Enlace de la app o del documento
+   incrustar    true: se abre dentro del portal; false: en otra pestaña
+   descargas    Botones de descarga: { texto: "", archivo: "" }
+   videos       ids de VIDEOS relacionados
+   terminos     Términos del GLOSARIO, escritos igual que allí
+   --------------------------------------------------------------------- */
+const PROYECTOS = [
   {
-    titulo: "Redes Neuronales y Deep Learning",
-    descripcion: "CardioPredict AI es una aplicación web en R Shiny que estima la probabilidad de un evento cardíaco adverso a cinco años con una red neuronal densa (Keras y TensorFlow). Usa datos cargados desde Excel: edad, síntomas, frecuencia cardíaca promedio y variabilidad de la frecuencia cardíaca. Integra análisis descriptivo, entrenamiento y evaluación del modelo con exactitud, AUC y curvas de aprendizaje, y proyección individual del riesgo acumulado a 60 meses con un escenario hipotético de intervención. Es una herramienta académica y exploratoria; no sustituye el juicio clínico.",
-    tipo: "Shiny",
-    url: "https://cguillermo79.shinyapps.io/examen_final/",
-    fecha: "2026-11-08",
-    incrustar: true
+    id: "incendios-loja",
+    corto: "Incendios Loja",
+    titulo: "Predicción de incendios forestales en el cantón Loja",
+    tipo: "Investigación",
+    estado: "Propuesta",
+    fecha: "2026-11-13",
+    cifras: [
+      ["7.997", "celdas de 500 m"],
+      ["2019–2024", "período analizado"],
+      ["0,5 %", "celdas-mes con incendio"]
+    ],
+    descripcion: "Propuesta de investigación que evalúa si incorporar contexto espacial, temporal o ambos en redes neuronales mejora la predicción mensual de incendios forestales en el cantón Loja. Compara un perceptrón multicapa (MLP) con redes CNN, LSTM y CNN-LSTM sobre 7.997 celdas de 500 m entre 2019 y 2024, con 16 predictores climáticos, espectrales, topográficos, antrópicos y de cobertura del suelo. Como los incendios son eventos raros (cerca del 0,5 % de las celdas-mes), usa validación espaciotemporal, métricas para clases desbalanceadas e inferencia robusta a la dependencia temporal.",
+    url: "descargas/propuesta-investigacion.pdf",
+    incrustar: true,
+    descargas: [
+      { texto: "Propuesta (PDF)", archivo: "descargas/propuesta-investigacion.pdf" }
+    ],
+    videos: ["mlp-dotcsv", "mlp-statquest", "cnn-ringa", "lstm-statquest", "validacion-espacial"],
+    terminos: ["CNN 1D", "LSTM", "Ventana temporal", "Validación"]
   },
   {
+    id: "cardiopredict-v2",
+    corto: "CardioPredict v2",
     titulo: "CardioPredict AI v2: comparación de modelos",
-    descripcion: "CardioPredict AI, es una aplicación en R Shiny que compara redes recurrentes (LSTM y SimpleRNN), redes convolucionales 1D y regresión logística para estimar el riesgo de un evento cardíaco a cinco años. Usa 1.200 pacientes, de los cuales solo 72 tuvieron el evento (6 %), por lo que aplica validación cruzada y estrategias para clases desbalanceadas. La regresión logística obtuvo el mejor resultado (AUC 0,77), seguida por la LSTM (0,66) y la CNN 1D (0,58). Es una herramienta académica y no sustituye el juicio clínico.",
     tipo: "Shiny",
-    url: "https://vivianap.shinyapps.io/proyecto/",
+    estado: "Publicado",
     fecha: "2026-11-11",
+    cifras: [
+      ["0,77", "AUC, regresión logística"],
+      ["1.200", "pacientes"],
+      ["6 %", "con evento cardíaco"]
+    ],
+    descripcion: "CardioPredict AI es una aplicación en R Shiny que compara redes recurrentes (LSTM y SimpleRNN), redes convolucionales 1D y regresión logística para estimar el riesgo de un evento cardíaco a cinco años. Usa 1.200 pacientes, de los cuales solo 72 tuvieron el evento (6 %), por lo que aplica validación cruzada y estrategias para clases desbalanceadas. La regresión logística obtuvo el mejor resultado (AUC 0,77), seguida por la LSTM (0,66) y la CNN 1D (0,58). Es una herramienta académica y no sustituye el juicio clínico.",
+    url: "https://vivianap.shinyapps.io/proyecto/",
     incrustar: true,
     descargas: [
       { texto: "Presentación", archivo: "https://drive.google.com/file/d/1eeNMoLkiVe34PlibIoq1y1kfBiO5vq8J/view?usp=sharing" },
       { texto: "Base de datos", archivo: "https://docs.google.com/spreadsheets/d/1YorSzc5h6wl2soyvV5eFgeWAfB-tQeB0/edit?usp=sharing&ouid=113818342843251676047&rtpof=true&sd=true" }
-    ]
+    ],
+    videos: ["logistica-statquest", "rnn-codificando", "rnn-statquest", "lstm-statquest", "cnn-ringa"],
+    terminos: ["RNN", "LSTM", "CNN 1D", "Sobreajuste"]
   },
-   {
-    titulo: "Predicción de incendios forestales en el cantón Loja",
-    descripcion: "Propuesta de investigación que evalúa si incorporar contexto espacial, temporal o ambos en redes neuronales mejora la predicción mensual de incendios forestales en el cantón Loja. Compara un perceptrón multicapa (MLP) con redes CNN, LSTM y CNN-LSTM sobre 7.997 celdas de 500 m entre 2019 y 2024, con 16 predictores climáticos, espectrales, topográficos, antrópicos y de cobertura del suelo. Como los incendios son eventos raros (cerca del 0,5 % de las celdas-mes), usa validación espaciotemporal, métricas para clases desbalanceadas e inferencia robusta a la dependencia temporal.",
-    tipo: "Investigación",
-    url: "https://cguillermo79.github.io/LojaFireLab/",
-    fecha: "2026-11-13",
+  {
+    id: "cardiopredict-v1",
+    corto: "CardioPredict v1",
+    titulo: "CardioPredict AI v1: red neuronal densa",
+    tipo: "Shiny",
+    estado: "Publicado",
+    fecha: "2026-11-08",
+    cifras: [
+      ["5 años", "horizonte de predicción"],
+      ["60 meses", "proyección del riesgo acumulado"]
+    ],
+    descripcion: "CardioPredict AI es una aplicación web en R Shiny que estima la probabilidad de un evento cardíaco adverso a cinco años con una red neuronal densa (Keras y TensorFlow). Usa datos cargados desde Excel: edad, síntomas, frecuencia cardíaca promedio y variabilidad de la frecuencia cardíaca. Integra análisis descriptivo, entrenamiento y evaluación del modelo con exactitud, AUC y curvas de aprendizaje, y proyección individual del riesgo acumulado a 60 meses con un escenario hipotético de intervención. Es una herramienta académica y exploratoria; no sustituye el juicio clínico.",
+    url: "https://cguillermo79.shinyapps.io/examen_final/",
     incrustar: true,
-    descargas: [
-      { texto: "Propuesta (PDF)", archivo: "descargas/propuesta-investigacion.pdf" }
-    ]
-  },
-  
-
+    descargas: [],
+    videos: ["mlp-dotcsv", "mlp-statquest"],
+    terminos: ["Época", "Dropout", "Función de pérdida", "Sobreajuste"]
+  }
 ];
-/* =====================================================================
+
+/* ---------------------------------------------------------------------
+   VIDEOS DE APOYO
+   id      Identificador corto que usan los proyectos en "videos"
+   modelo  Tema del video; crea los filtros solo
+   idioma  "Español" o "Inglés"
+   --------------------------------------------------------------------- */
+const VIDEOS = [
+  { id: "logistica-statquest", modelo: "Regresión logística", titulo: "StatQuest: Logistic Regression", canal: "StatQuest with Josh Starmer", idioma: "Inglés", url: "https://www.youtube.com/watch?v=yIYKR4sgzI8" },
+  { id: "rnn-codificando", modelo: "SimpleRNN", titulo: "Redes Neuronales Recurrentes: explicación detallada", canal: "Codificando Bits", idioma: "Español", url: "https://www.youtube.com/watch?v=hB4XYst_t-I" },
+  { id: "rnn-statquest", modelo: "SimpleRNN", titulo: "Recurrent Neural Networks (RNNs), Clearly Explained", canal: "StatQuest with Josh Starmer", idioma: "Inglés", url: "https://www.youtube.com/watch?v=AsNTP8Kwu80" },
+  { id: "lstm-statquest", modelo: "LSTM", titulo: "Long Short-Term Memory (LSTM), Clearly Explained", canal: "StatQuest with Josh Starmer", idioma: "Inglés", url: "https://www.youtube.com/watch?v=YCzL96nL7j0" },
+  { id: "cnn-ringa", modelo: "Red convolucional", titulo: "Redes Neuronales Convolucionales: clasificación avanzada de imágenes", canal: "Ringa Tech", idioma: "Español", url: "https://www.youtube.com/watch?v=4sWhhQwHqug" },
+  { id: "mlp-dotcsv", modelo: "Perceptrón multicapa", titulo: "¿Qué es una Red Neuronal? Parte 1: La Neurona", canal: "DotCSV", idioma: "Español", url: "https://www.youtube.com/watch?v=MRIv2IwFTPg" },
+  { id: "mlp-statquest", modelo: "Perceptrón multicapa", titulo: "The Essential Main Ideas of Neural Networks", canal: "StatQuest with Josh Starmer", idioma: "Inglés", url: "https://www.youtube.com/watch?v=CqOfi41LfDw" },
+  { id: "validacion-espacial", modelo: "Validación espaciotemporal", titulo: "The importance of spatial cross-validation in predictive modeling", canal: "Jannes Münchow, OpenGeoHub", idioma: "Inglés", url: "https://www.youtube.com/watch?v=1rSoiSb7xbw" }
+];
+
+/* ---------------------------------------------------------------------
    GLOSARIO
    Cada renglón es: ["Término", "Descripción"]
-   ===================================================================== */
+   --------------------------------------------------------------------- */
 const GLOSARIO = [
   {
-    grupo: "Redes neuronales recurrentes RNN",
+    grupo: "Redes neuronales recurrentes (RNN)",
     terminos: [
       ["RNN", "Red que procesa datos en secuencia y “recuerda” lo anterior mediante un estado oculto."],
       ["Secuencia", "Datos ordenados en el tiempo, como la frecuencia cardíaca latido a latido."],
@@ -801,7 +1129,7 @@ const GLOSARIO = [
     ]
   },
   {
-    grupo: "Redes neuronales convolucionales 1D (CNN 1D)",
+    grupo: "Redes convolucionales 1D (CNN 1D)",
     terminos: [
       ["CNN 1D", "Red que desliza filtros sobre una serie para detectar patrones locales."],
       ["Filtro (kernel)", "Ventana pequeña que busca un patrón, como un pico o una caída."],
@@ -823,81 +1151,126 @@ const GLOSARIO = [
     ]
   }
 ];
-/* =====================================================================
-   VIDEOS DE APOYO
-   modelo  Tema del video; aparece arriba de cada tarjeta
-   idioma  "Español" o "Inglés"
-   ===================================================================== */
-const VIDEOS = [
+
+/* ---------------------------------------------------------------------
+   INTEGRANTES
+   foto         Archivo de la fotografía; con "" se muestran las iniciales
+   trayectoria  Un renglón por período: { periodo: "", cargo: "" }
+   --------------------------------------------------------------------- */
+const INTEGRANTES = [
   {
-    modelo: "Regresión logística",
-    titulo: "StatQuest: Logistic Regression",
-    canal: "StatQuest with Josh Starmer",
-    idioma: "Inglés",
-    url: "https://www.youtube.com/watch?v=yIYKR4sgzI8"
+    nombre: "Viviana Pujos",
+    foto: "viviana-pujos.jpeg",
+    titulo: "Maestrante, Ingeniera Matemática, Universidad Central, 38 años",
+    trayectoria: [
+      { periodo: "2013–2015", cargo: "Coordinadora Nacional Registro Social" },
+      { periodo: "2015–Actualidad", cargo: "Coordinadora de Estrategia de Cobranza - Produbanco" }
+    ]
   },
   {
-    modelo: "SimpleRNN",
-    titulo: "Redes Neuronales Recurrentes: explicación detallada",
-    canal: "Codificando Bits",
-    idioma: "Español",
-    url: "https://www.youtube.com/watch?v=hB4XYst_t-I"
+    nombre: "Carlos Chuncho",
+    foto: "carlos-chuncho.png",
+    titulo: "Maestrante, Ingeniero Ambiental, 38 años",
+    trayectoria: [
+      { periodo: "", cargo: "Ingeniería Agronómica — Universidad Nacional de Loja, Ecuador." },
+      { periodo: "", cargo: "Maestría en Ciencias de la Agricultura — CATIE, Costa Rica." },
+      { periodo: "2017", cargo: "Maestría en Ciencias de la Ingeniería — Pontificia Universidad Católica de Chile." },
+      { periodo: "2025–Actualidad", cargo: "Maestría en Estadística, mención Ciencia de Datos e Inteligencia Artificial — ESPOCH, Ecuador." }
+    ]
   },
   {
-    modelo: "SimpleRNN",
-    titulo: "Recurrent Neural Networks (RNNs), Clearly Explained",
-    canal: "StatQuest with Josh Starmer",
-    idioma: "Inglés",
-    url: "https://www.youtube.com/watch?v=AsNTP8Kwu80"
-  },
-  {
-    modelo: "LSTM",
-    titulo: "Long Short-Term Memory (LSTM), Clearly Explained",
-    canal: "StatQuest with Josh Starmer",
-    idioma: "Inglés",
-    url: "https://www.youtube.com/watch?v=YCzL96nL7j0"
-  },
-  {
-    modelo: "Red convolucional",
-    titulo: "Redes Neuronales Convolucionales: clasificación avanzada de imágenes",
-    canal: "Ringa Tech",
-    idioma: "Español",
-    url: "https://www.youtube.com/watch?v=4sWhhQwHqug"
+    nombre: "Marco Malán",
+    foto: "marco-malan.jpg",
+    titulo: "Maestrante, Ingeniero en sistemas, 44 años",
+    trayectoria: [
+      { periodo: "2009–2020", cargo: "Coordinador de TIC" },
+      { periodo: "2019–2021", cargo: "Maestría en Auditoría Informática" },
+      { periodo: "2021–2023", cargo: "Oficial de Seguridad de la Información" },
+      { periodo: "2023–2026", cargo: "Auditor informático" }
+    ]
   }
 ];
 /* ===================== FIN DE LA ZONA EDITABLE ===================== */
 
 
-const MAX_SALIDAS = 12;
 const svgNS = "http://www.w3.org/2000/svg";
+const MAX_SALIDAS = 6;
+const reducirMovimiento = matchMedia("(prefers-reduced-motion: reduce)");
+const ICONO_PLEGAR = '<svg class="chevron" width="20" height="20" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+/* Utilidades */
 function urlValida(url) {
   if (typeof url !== "string" || !url.trim()) return false;
   const esquema = url.trim().match(/^([a-z][a-z0-9+.-]*):/i);
   return !esquema || /^https?$/i.test(esquema[1]);
 }
 
-const portales = PORTALES
+function esExterna(url) { return /^https?:/i.test(url); }
+
+function elemento(etiqueta, clase, texto) {
+  const el = document.createElement(etiqueta);
+  if (clase) el.className = clase;
+  if (texto) el.textContent = texto;
+  return el;
+}
+
+function normalizar(texto) {
+  return String(texto || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+}
+
+function slug(texto) {
+  return "t-" + normalizar(texto).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function fechaLegible(texto) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(texto || "");
+  if (!m) return "";
+  return new Date(+m[1], +m[2] - 1, +m[3])
+    .toLocaleDateString("es-EC", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function enlaceExterno(a, url) {
+  a.href = url;
+  a.target = "_blank";
+  a.rel = "noopener";
+  return a;
+}
+
+function desplazarA(el) {
+  el.scrollIntoView({ behavior: reducirMovimiento.matches ? "auto" : "smooth", block: "start" });
+}
+
+function destellar(el) {
+  el.classList.add("resaltada");
+  setTimeout(() => el.classList.remove("resaltada"), 1800);
+}
+
+/* Datos preparados */
+const proyectos = PROYECTOS
   .filter(p => {
-    const ok = p && p.titulo && urlValida(p.url);
-    if (!ok) console.warn("Portal omitido: revisa su título y su url.", p);
+    const ok = p && p.id && p.titulo && urlValida(p.url);
+    if (!ok) console.warn("Proyecto omitido: revisa su id, título y url.", p);
     return ok;
   })
   .sort((a, b) => String(b.fecha || "").localeCompare(String(a.fecha || "")));
 
-/* Logo: si aún no se ha subido, muestra el nombre */
+const videos = VIDEOS.filter(v => v && v.titulo && urlValida(v.url));
+const videoPorId = Object.fromEntries(videos.filter(v => v.id).map(v => [v.id, v]));
+const terminosConocidos = new Set(GLOSARIO.flatMap(g => g.terminos.map(t => t[0])));
+
+/* Logo */
 const logo = document.getElementById("logo");
-function logoAlterno() { logo.textContent = "ESPOCH"; }
 const imagenLogo = logo.querySelector("img");
+function logoAlterno() { logo.textContent = "ESPOCH"; }
 imagenLogo.addEventListener("error", logoAlterno);
 if (imagenLogo.complete && imagenLogo.naturalWidth === 0) logoAlterno();
 
-/* Red neuronal: cada integrante es una entrada y cada portal una salida */
+/* Red neuronal: integrantes como entradas y proyectos como salidas */
 const contenedorRed = document.getElementById("red");
-const reducirMovimiento = matchMedia("(prefers-reduced-motion: reduce)");
 let capas = [];
 let aristas = [];
 let pulsos = [];
+let enlacesSalida = [];
 let svg = null;
 
 function crear(nombre, atributos, padre) {
@@ -913,37 +1286,53 @@ function dibujarRed() {
   if (!w || !h) return;
 
   contenedorRed.textContent = "";
-  svg = crear("svg", { viewBox: `0 0 ${w} ${h}` }, contenedorRed);
+  svg = crear("svg", { viewBox: `0 0 ${w} ${h}`, role: "group", "aria-label": "Red de integrantes y proyectos" }, contenedorRed);
 
-  const salidas = Math.max(1, Math.min(portales.length, MAX_SALIDAS));
-  const tamanos = w < 460 ? [3, 4, salidas] : [3, 5, 4, salidas];
-  const xIni = 134;
-  const xFin = w - 16;
+  const salidas = proyectos.slice(0, MAX_SALIDAS);
+  const angosta = w < 480;
+  const tamanos = angosta ? [3, 4, Math.max(1, salidas.length)] : [3, 5, 4, Math.max(1, salidas.length)];
+  const xIni = angosta ? 112 : 128;
+  const xFin = w - (angosta ? 116 : 136);
 
   capas = tamanos.map((n, c) => {
     const x = xIni + (xFin - xIni) * c / (tamanos.length - 1);
-    const paso = n > 1 ? Math.min(62, (h - 28) / (n - 1)) : 0;
+    const paso = n > 1 ? Math.min(64, (h - 32) / (n - 1)) : 0;
     return Array.from({ length: n }, (_, i) => ({ x, y: h / 2 + (i - (n - 1) / 2) * paso }));
   });
 
-  const grupoAristas = crear("g", {}, svg);
+  const grupoAristas = crear("g", { "aria-hidden": "true" }, svg);
   aristas = [];
   capas.slice(0, -1).forEach((capa, c) => {
     capa.forEach((a, ia) => capas[c + 1].forEach((b, ib) => {
       const el = crear("line", { class: "arista", x1: a.x, y1: a.y, x2: b.x, y2: b.y }, grupoAristas);
-      aristas.push({ el, capa: c, ia, ib });
+      aristas.push({ el, capa: c, ib });
     }));
   });
 
+  const ultima = capas.length - 1;
+  enlacesSalida = [];
   capas.forEach((capa, c) => capa.forEach((n, i) => {
-    let clase = "nodo";
-    if (c === 0) clase += " entrada";
-    if (c === capas.length - 1) clase += portales.length ? " salida" : " pendiente";
-    const nodo = crear("circle", { class: clase, cx: n.x, cy: n.y, r: c === 0 ? 7 : 6 }, svg);
-    n.el = nodo;
     if (c === 0) {
-      crear("text", { class: "nombre", x: n.x - 16, y: n.y }, svg).textContent = INTEGRANTES[i].nombre;
+      n.el = crear("circle", { class: "nodo entrada", cx: n.x, cy: n.y, r: 7, "aria-hidden": "true" }, svg);
+      const nombre = INTEGRANTES[i] ? INTEGRANTES[i].nombre : "";
+      crear("text", { class: "nombre", x: n.x - 15, y: n.y, "aria-hidden": "true", style: angosta ? "font-size:12.5px" : "" }, svg).textContent = nombre;
+      return;
     }
+    if (c === ultima && salidas[i]) {
+      const p = salidas[i];
+      const g = crear("g", { class: "salida-enlace", tabindex: 0, role: "link", "aria-label": "Ir al proyecto " + p.titulo }, svg);
+      crear("rect", { x: n.x - 12, y: n.y - 14, width: (angosta ? 116 : 136) + 8, height: 28, fill: "transparent" }, g);
+      n.el = crear("circle", { class: "nodo salida", cx: n.x, cy: n.y, r: 7 }, g);
+      crear("text", { class: "nombre-salida", x: n.x + 14, y: n.y, style: angosta ? "font-size:12px" : "" }, g).textContent = p.corto || p.titulo;
+      g.addEventListener("click", () => irAProyecto(p.id));
+      g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); irAProyecto(p.id); } });
+      g.addEventListener("mouseenter", () => resaltarSalida(i, true));
+      g.addEventListener("mouseleave", () => resaltarSalida(i, false));
+      enlacesSalida[i] = g;
+      return;
+    }
+    const clase = c === ultima ? "nodo pendiente" : "nodo";
+    n.el = crear("circle", { class: clase, cx: n.x, cy: n.y, r: 6, "aria-hidden": "true" }, svg);
   }));
 
   pulsos = [];
@@ -954,7 +1343,7 @@ function dibujarRed() {
 
 function nuevoPulso(inicio) {
   const ruta = capas.map(capa => capa[Math.floor(Math.random() * capa.length)]);
-  return { ruta, t: inicio, el: crear("circle", { class: "pulso", r: 3, opacity: 0 }, svg) };
+  return { ruta, t: inicio, el: crear("circle", { class: "pulso", r: 3, opacity: 0, "aria-hidden": "true" }, svg) };
 }
 
 let ultimo = 0;
@@ -982,39 +1371,360 @@ function animar(ahora) {
 }
 
 function resaltarSalida(indice, activa) {
-  if (indice >= MAX_SALIDAS || !capas.length) return;
+  if (indice < 0 || indice >= MAX_SALIDAS || !capas.length) return;
   const ultima = capas.length - 1;
-  capas[ultima][indice].el.classList.toggle("activa", activa);
+  const nodo = capas[ultima][indice];
+  if (!nodo || !nodo.el) return;
+  nodo.el.classList.toggle("activa", activa);
+  if (enlacesSalida[indice]) enlacesSalida[indice].classList.toggle("activa", activa);
   aristas.forEach(a => {
     if (a.capa === ultima - 1 && a.ib === indice) a.el.classList.toggle("activa", activa);
   });
 }
 
-/* Listado y filtros */
-const lista = document.getElementById("portales");
-const vacio = document.getElementById("vacio");
-const filtros = document.getElementById("filtros");
-let filtroActual = "Todos";
+/* Proyectos */
+const listaProyectos = document.getElementById("lista-proyectos");
+const filtrosProyectos = document.getElementById("filtros-proyectos");
+let filtroProyecto = "Todos";
 
-function fechaLegible(texto) {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(texto || "");
-  if (!m) return "";
-  return new Date(+m[1], +m[2] - 1, +m[3])
-    .toLocaleDateString("es-EC", { day: "numeric", month: "short", year: "numeric" });
+function claseEstado(estado) {
+  const e = normalizar(estado);
+  if (e === "publicado") return "publicado";
+  if (e === "propuesta") return "propuesta";
+  return "otro";
 }
 
-function elemento(etiqueta, clase, texto) {
-  const el = document.createElement(etiqueta);
-  if (clase) el.className = clase;
-  if (texto) el.textContent = texto;
-  return el;
+function pintarProyectos() {
+  proyectos.forEach((p, indice) => {
+    const ficha = elemento("article", "ficha");
+    ficha.id = "p-" + p.id;
+    ficha.dataset.tipo = p.tipo || "";
+
+    const cabeza = elemento("div", "ficha-cabeza");
+    const info = elemento("div");
+    const meta = elemento("div", "ficha-meta");
+    meta.appendChild(elemento("span", "tipo", p.tipo || "Enlace"));
+    if (p.estado) meta.appendChild(elemento("span", "estado " + claseEstado(p.estado), p.estado));
+    const fecha = fechaLegible(p.fecha);
+    if (fecha) meta.appendChild(elemento("span", "fecha", fecha));
+    info.appendChild(meta);
+    info.appendChild(elemento("h3", "", p.titulo));
+
+    if (p.cifras && p.cifras.length) {
+      const cifras = elemento("ul", "cifras");
+      p.cifras.forEach(([valor, etiqueta]) => {
+        const li = elemento("li");
+        li.appendChild(elemento("strong", "", valor));
+        li.appendChild(elemento("span", "", etiqueta));
+        cifras.appendChild(li);
+      });
+      info.appendChild(cifras);
+    }
+    cabeza.appendChild(info);
+
+    const acciones = elemento("div", "acciones");
+    if (p.incrustar) {
+      const ver = elemento("button", "boton", "Ver aquí");
+      ver.type = "button";
+      ver.addEventListener("click", () => abrirVisor(p));
+      acciones.appendChild(ver);
+      acciones.appendChild(enlaceExterno(elemento("a", "boton secundario", "Abrir en otra pestaña"), p.url));
+    } else {
+      acciones.appendChild(enlaceExterno(elemento("a", "boton", "Abrir"), p.url));
+    }
+    cabeza.appendChild(acciones);
+    ficha.appendChild(cabeza);
+
+    const mas = elemento("details", "ficha-mas");
+    const resumen = elemento("summary");
+    resumen.appendChild(elemento("span", "", "Descripción y recursos"));
+    resumen.insertAdjacentHTML("beforeend", ICONO_PLEGAR);
+    mas.appendChild(resumen);
+
+    const cuerpo = elemento("div", "ficha-cuerpo");
+    if (p.descripcion) cuerpo.appendChild(elemento("p", "", p.descripcion));
+    const recursos = elemento("div", "recursos");
+
+    const archivos = (p.descargas || []).filter(d => d && d.texto && urlValida(d.archivo));
+    if (archivos.length) {
+      const bloque = elemento("div");
+      bloque.appendChild(elemento("h4", "", "Descargas"));
+      const botones = elemento("div", "botones-chicos");
+      archivos.forEach(d => {
+        const a = elemento("a", "chip", d.texto);
+        if (esExterna(d.archivo)) {
+          enlaceExterno(a, d.archivo);
+        } else {
+          a.href = d.archivo;
+          a.setAttribute("download", "");
+        }
+        botones.appendChild(a);
+      });
+      bloque.appendChild(botones);
+      recursos.appendChild(bloque);
+    }
+
+    const relacionados = (p.videos || []).map(id => videoPorId[id]).filter(Boolean);
+    if (relacionados.length) {
+      const bloque = elemento("div");
+      bloque.appendChild(elemento("h4", "", "Videos relacionados"));
+      const ul = elemento("ul", "videos-relacionados");
+      relacionados.forEach(v => {
+        const li = elemento("li");
+        const a = elemento("a");
+        a.href = "#v-" + v.id;
+        a.appendChild(elemento("span", "", v.titulo));
+        a.appendChild(elemento("span", "", [v.modelo, v.idioma].filter(Boolean).join(", ")));
+        a.addEventListener("click", e => { e.preventDefault(); irAVideo(v.id); });
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      bloque.appendChild(ul);
+      recursos.appendChild(bloque);
+    }
+
+    const terminos = (p.terminos || []).filter(t => terminosConocidos.has(t));
+    if (terminos.length) {
+      const bloque = elemento("div");
+      bloque.appendChild(elemento("h4", "", "Términos clave"));
+      const botones = elemento("div", "botones-chicos");
+      terminos.forEach(t => {
+        const b = elemento("button", "chip", t);
+        b.type = "button";
+        b.addEventListener("click", () => irATermino(t));
+        botones.appendChild(b);
+      });
+      bloque.appendChild(botones);
+      recursos.appendChild(bloque);
+    }
+
+    if (recursos.children.length) cuerpo.appendChild(recursos);
+    mas.appendChild(cuerpo);
+    ficha.appendChild(mas);
+
+    if (indice < MAX_SALIDAS) {
+      ficha.addEventListener("mouseenter", () => resaltarSalida(indice, true));
+      ficha.addEventListener("mouseleave", () => resaltarSalida(indice, false));
+    }
+
+    ficha.dataset.busqueda = normalizar([p.titulo, p.tipo, p.estado, p.descripcion, (p.cifras || []).flat().join(" "), terminos.join(" ")].join(" "));
+    listaProyectos.appendChild(ficha);
+  });
 }
 
+function pintarFiltrosProyectos() {
+  const tipos = [...new Set(proyectos.map(p => p.tipo).filter(Boolean))];
+  filtrosProyectos.textContent = "";
+  if (tipos.length < 2) return;
+  ["Todos", ...tipos].forEach(tipo => {
+    const b = elemento("button", "", tipo);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(tipo === filtroProyecto));
+    b.addEventListener("click", () => {
+      filtroProyecto = tipo;
+      pintarFiltrosProyectos();
+      aplicarFiltros();
+    });
+    filtrosProyectos.appendChild(b);
+  });
+}
+
+function irAProyecto(id) {
+  const ficha = document.getElementById("p-" + id);
+  if (!ficha) return;
+  if (ficha.hidden) limpiarFiltros();
+  desplazarA(ficha);
+  destellar(ficha);
+}
+
+/* Videos */
+const listaVideos = document.getElementById("lista-videos");
+const filtrosVideos = document.getElementById("filtros-videos");
+let filtroVideo = "Todos";
+
+function idYoutube(url) {
+  const m = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]{11})/.exec(url);
+  return m ? m[1] : "";
+}
+
+function pintarVideos() {
+  videos.forEach(v => {
+    const item = elemento("li");
+    item.dataset.modelo = v.modelo || "";
+    item.dataset.busqueda = normalizar([v.titulo, v.modelo, v.canal, v.idioma].join(" "));
+
+    const tarjeta = elemento("details", "video");
+    if (v.id) tarjeta.id = "v-" + v.id;
+
+    const cabeza = elemento("summary");
+    const textos = elemento("div");
+    if (v.modelo) textos.appendChild(elemento("span", "tipo", v.modelo));
+    textos.appendChild(elemento("h3", "", v.titulo));
+    cabeza.appendChild(textos);
+    cabeza.insertAdjacentHTML("beforeend", ICONO_PLEGAR);
+    tarjeta.appendChild(cabeza);
+
+    const cuerpo = elemento("div", "video-cuerpo");
+    const id = idYoutube(v.url);
+    if (id) {
+      const enlace = enlaceExterno(elemento("a", "miniatura"), v.url);
+      enlace.tabIndex = -1;
+      const img = document.createElement("img");
+      img.loading = "lazy";
+      img.alt = "";
+      img.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+      img.addEventListener("error", () => enlace.remove());
+      enlace.appendChild(img);
+      cuerpo.appendChild(enlace);
+    }
+    const detalle = [v.canal, v.idioma].filter(Boolean).join(", ");
+    if (detalle) cuerpo.appendChild(elemento("p", "", detalle));
+    cuerpo.appendChild(enlaceExterno(elemento("a", "boton", "Ver video"), v.url));
+    tarjeta.appendChild(cuerpo);
+
+    item.appendChild(tarjeta);
+    listaVideos.appendChild(item);
+  });
+}
+
+function pintarFiltrosVideos() {
+  const temas = [...new Set(videos.map(v => v.modelo).filter(Boolean))];
+  filtrosVideos.textContent = "";
+  if (temas.length < 2) return;
+  ["Todos", ...temas].forEach(tema => {
+    const b = elemento("button", "", tema);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(tema === filtroVideo));
+    b.addEventListener("click", () => {
+      filtroVideo = tema;
+      pintarFiltrosVideos();
+      aplicarFiltros();
+    });
+    filtrosVideos.appendChild(b);
+  });
+}
+
+function irAVideo(id) {
+  const tarjeta = document.getElementById("v-" + id);
+  if (!tarjeta) return;
+  if (tarjeta.parentElement.hidden) limpiarFiltros();
+  tarjeta.open = true;
+  desplazarA(tarjeta);
+  destellar(tarjeta);
+}
+
+/* Glosario */
+const listaGlosario = document.getElementById("lista-glosario");
+
+function pintarGlosario() {
+  GLOSARIO.forEach(g => {
+    const bloque = elemento("section", "bloque-glosario");
+    bloque.appendChild(elemento("h3", "", g.grupo));
+    g.terminos.forEach(([termino, descripcion]) => {
+      const item = elemento("details", "termino");
+      item.id = slug(termino);
+      item.dataset.busqueda = normalizar(termino + " " + descripcion);
+      const resumen = elemento("summary", "", termino);
+      resumen.insertAdjacentHTML("beforeend", ICONO_PLEGAR);
+      item.appendChild(resumen);
+      item.appendChild(elemento("p", "", descripcion));
+      bloque.appendChild(item);
+    });
+    listaGlosario.appendChild(bloque);
+  });
+}
+
+function irATermino(termino) {
+  const item = document.getElementById(slug(termino));
+  if (!item) return;
+  if (item.hidden) limpiarFiltros();
+  item.open = true;
+  desplazarA(item.closest(".bloque-glosario"));
+  destellar(item);
+}
+
+/* Búsqueda y filtros combinados */
+const campoBusqueda = document.getElementById("buscar");
+const estadoBusqueda = document.getElementById("estado-busqueda");
+const terminosAbiertosPorBusqueda = new Set();
+
+function aplicarFiltros() {
+  const q = normalizar(campoBusqueda.value);
+  const coincide = el => !q || el.dataset.busqueda.includes(q);
+
+  let nProyectos = 0;
+  listaProyectos.querySelectorAll(".ficha").forEach(f => {
+    const visible = (filtroProyecto === "Todos" || f.dataset.tipo === filtroProyecto) && coincide(f);
+    f.hidden = !visible;
+    if (visible) nProyectos++;
+  });
+  document.getElementById("sin-proyectos").hidden = nProyectos > 0;
+
+  let nVideos = 0;
+  listaVideos.querySelectorAll(":scope > li").forEach(li => {
+    const visible = (filtroVideo === "Todos" || li.dataset.modelo === filtroVideo) && coincide(li);
+    li.hidden = !visible;
+    if (visible) nVideos++;
+  });
+  document.getElementById("sin-videos").hidden = nVideos > 0;
+
+  terminosAbiertosPorBusqueda.forEach(t => { t.open = false; });
+  terminosAbiertosPorBusqueda.clear();
+  let nTerminos = 0;
+  listaGlosario.querySelectorAll(".bloque-glosario").forEach(bloque => {
+    let visibles = 0;
+    bloque.querySelectorAll(".termino").forEach(t => {
+      const visible = coincide(t);
+      t.hidden = !visible;
+      if (visible) {
+        visibles++;
+        if (q.length >= 3 && !t.open) {
+          t.open = true;
+          terminosAbiertosPorBusqueda.add(t);
+        }
+      }
+    });
+    bloque.hidden = visibles === 0;
+    nTerminos += visibles;
+  });
+  document.getElementById("sin-terminos").hidden = nTerminos > 0;
+
+  if (q) {
+    const plural = (n, uno, varios) => n + " " + (n === 1 ? uno : varios);
+    estadoBusqueda.textContent = `${plural(nProyectos, "proyecto", "proyectos")}, ${plural(nVideos, "video", "videos")} y ${plural(nTerminos, "término", "términos")} coinciden con «${campoBusqueda.value.trim()}».`;
+    estadoBusqueda.hidden = false;
+  } else {
+    estadoBusqueda.hidden = true;
+  }
+}
+
+function limpiarFiltros() {
+  campoBusqueda.value = "";
+  filtroProyecto = "Todos";
+  filtroVideo = "Todos";
+  pintarFiltrosProyectos();
+  pintarFiltrosVideos();
+  aplicarFiltros();
+}
+
+let temporizador = null;
+campoBusqueda.addEventListener("input", () => {
+  clearTimeout(temporizador);
+  temporizador = setTimeout(aplicarFiltros, 120);
+});
+campoBusqueda.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const primero = document.querySelector("main .ficha:not([hidden]), #lista-videos > li:not([hidden]), .termino:not([hidden])");
+    if (primero) desplazarA(primero);
+  }
+});
+
+/* Integrantes */
 function pintarIntegrantes() {
   const contenedor = document.getElementById("integrantes");
   INTEGRANTES.forEach(i => {
     const ficha = elemento("li", "integrante");
-
     const iniciales = i.nombre.split(/\s+/).map(parte => parte[0]).join("").slice(0, 2);
     const foto = elemento("div", "foto", i.foto ? "" : iniciales);
     if (i.foto) {
@@ -1025,132 +1735,42 @@ function pintarIntegrantes() {
       foto.appendChild(img);
     }
     ficha.appendChild(foto);
-
     ficha.appendChild(elemento("h3", "", i.nombre));
     if (i.titulo) ficha.appendChild(elemento("p", "", i.titulo));
-
-    if (i.trayectoria.length) {
+    if (i.trayectoria && i.trayectoria.length) {
       const lista = elemento("ul", "trayectoria");
       i.trayectoria.forEach(t => {
         const renglon = elemento("li");
         renglon.appendChild(elemento("span", "", t.cargo));
-        renglon.appendChild(elemento("span", "periodo", t.periodo));
+        if (t.periodo) renglon.appendChild(elemento("span", "periodo", t.periodo));
         lista.appendChild(renglon);
       });
       ficha.appendChild(lista);
     }
-
-    if (!i.titulo && !i.trayectoria.length) {
-      ficha.appendChild(elemento("p", "pendiente", "Datos por completar."));
-    }
-
     contenedor.appendChild(ficha);
   });
 }
 
-function pintarGlosario() {
-  const contenedor = document.getElementById("glosario");
-  GLOSARIO.forEach(g => {
-    const bloque = elemento("details", "bloque-glosario");
-    bloque.open = true;
-    bloque.appendChild(elemento("summary", "", g.grupo));
-    g.terminos.forEach(([termino, descripcion]) => {
-      const item = elemento("details", "termino");
-      item.appendChild(elemento("summary", "", termino));
-      item.appendChild(elemento("p", "", descripcion));
-      bloque.appendChild(item);
-    });
-    contenedor.appendChild(bloque);
-  });
+const pista = document.getElementById("integrantes");
+const anterior = document.getElementById("anterior");
+const siguiente = document.getElementById("siguiente");
+
+function actualizarFlechas() {
+  const maximo = pista.scrollWidth - pista.clientWidth;
+  anterior.hidden = siguiente.hidden = maximo <= 1;
+  anterior.disabled = pista.scrollLeft <= 1;
+  siguiente.disabled = pista.scrollLeft >= maximo - 1;
 }
 
-function pintarVideos() {
-  const contenedor = document.getElementById("videos");
-  VIDEOS.filter(v => v && v.titulo && urlValida(v.url)).forEach(v => {
-    const t = elemento("li", "video");
-    t.appendChild(elemento("div", "tipo", v.modelo));
-    t.appendChild(elemento("h3", "", v.titulo));
-    const detalle = [v.canal, v.idioma].filter(Boolean).join(", ");
-    if (detalle) t.appendChild(elemento("p", "", detalle));
-    const a = elemento("a", "boton", "Ver video");
-    a.href = v.url;
-    a.target = "_blank";
-    a.rel = "noopener";
-    t.appendChild(a);
-    contenedor.appendChild(t);
-  });
+function desplazar(direccion) {
+  if (!pista.firstElementChild) return;
+  const paso = pista.firstElementChild.offsetWidth + parseFloat(getComputedStyle(pista).columnGap);
+  pista.scrollBy({ left: direccion * paso, behavior: reducirMovimiento.matches ? "auto" : "smooth" });
 }
 
-function pintarLista() {
-  lista.textContent = "";
-  const visibles = portales.filter(p => filtroActual === "Todos" || p.tipo === filtroActual);
-
-  lista.hidden = visibles.length === 0;
-  vacio.hidden = visibles.length !== 0;
-
-  visibles.forEach(p => {
-    const fila = elemento("li", "portal");
-    const indice = portales.indexOf(p);
-    fila.addEventListener("mouseenter", () => resaltarSalida(indice, true));
-    fila.addEventListener("mouseleave", () => resaltarSalida(indice, false));
-    fila.addEventListener("focusin", () => resaltarSalida(indice, true));
-    fila.addEventListener("focusout", () => resaltarSalida(indice, false));
-
-    fila.appendChild(elemento("div", "tipo", p.tipo || "Enlace"));
-
-    const info = elemento("div");
-    info.appendChild(elemento("h3", "", p.titulo));
-    const fecha = fechaLegible(p.fecha);
-    const detalle = [p.descripcion, fecha].filter(Boolean).join(" ");
-    if (detalle) info.appendChild(elemento("p", "", detalle));
-    const archivos = (p.descargas || []).filter(d => d && d.texto && urlValida(d.archivo));
-    if (archivos.length) {
-      const zona = elemento("div", "descargas");
-      zona.appendChild(elemento("span", "", "Descargas:"));
-      archivos.forEach(d => {
-        const a = elemento("a", "descarga", d.texto);
-        a.href = d.archivo;
-        a.setAttribute("download", "");
-        zona.appendChild(a);
-      });
-      info.appendChild(zona);
-    }
-    fila.appendChild(info);
-
-    const acciones = elemento("div", "acciones");
-    const enlace = elemento("a", p.incrustar ? "enlace" : "boton", p.incrustar ? "Abrir en otra pestaña" : "Abrir");
-    enlace.href = p.url;
-    enlace.target = "_blank";
-    enlace.rel = "noopener";
-    if (p.incrustar) {
-      const ver = elemento("button", "boton", "Ver aquí");
-      ver.type = "button";
-      ver.addEventListener("click", () => abrirVisor(p));
-      acciones.appendChild(ver);
-    }
-    acciones.appendChild(enlace);
-    fila.appendChild(acciones);
-
-    lista.appendChild(fila);
-  });
-}
-
-function pintarFiltros() {
-  const tipos = [...new Set(portales.map(p => p.tipo).filter(Boolean))];
-  filtros.textContent = "";
-  if (tipos.length < 2) return;
-  ["Todos", ...tipos].forEach(tipo => {
-    const b = elemento("button", "", tipo);
-    b.type = "button";
-    b.setAttribute("aria-pressed", String(tipo === filtroActual));
-    b.addEventListener("click", () => {
-      filtroActual = tipo;
-      pintarFiltros();
-      pintarLista();
-    });
-    filtros.appendChild(b);
-  });
-}
+anterior.addEventListener("click", () => desplazar(-1));
+siguiente.addEventListener("click", () => desplazar(1));
+pista.addEventListener("scroll", actualizarFlechas, { passive: true });
 
 /* Visor */
 const visor = document.getElementById("visor");
@@ -1170,37 +1790,45 @@ marco.addEventListener("load", () => {
 document.getElementById("visor-cerrar").addEventListener("click", () => visor.close());
 visor.addEventListener("close", () => marco.removeAttribute("src"));
 
-/* Carrusel de integrantes: las flechas aparecen cuando no caben todas las fichas */
-const pista = document.getElementById("integrantes");
-const anterior = document.getElementById("anterior");
-const siguiente = document.getElementById("siguiente");
+/* Menú: marca la sección visible */
+const enlacesMenu = [...document.querySelectorAll(".menu a")];
+const secciones = enlacesMenu.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
 
-function actualizarFlechas() {
-  const maximo = pista.scrollWidth - pista.clientWidth;
-  anterior.hidden = siguiente.hidden = maximo <= 1;
-  anterior.disabled = pista.scrollLeft <= 1;
-  siguiente.disabled = pista.scrollLeft >= maximo - 1;
+function marcarSeccion() {
+  const limite = document.querySelector(".barra").offsetHeight + 40;
+  let actual = null;
+  secciones.forEach(s => { if (s.getBoundingClientRect().top <= limite) actual = s; });
+  if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) actual = secciones[secciones.length - 1];
+  enlacesMenu.forEach(a => a.setAttribute("aria-current", String(!!actual && a.getAttribute("href") === "#" + actual.id)));
 }
 
-function desplazar(direccion) {
-  const paso = pista.firstElementChild.offsetWidth + parseFloat(getComputedStyle(pista).columnGap);
-  pista.scrollBy({ left: direccion * paso, behavior: reducirMovimiento.matches ? "auto" : "smooth" });
-}
+enlacesMenu.forEach(a => a.addEventListener("click", e => {
+  const destino = document.querySelector(a.getAttribute("href"));
+  if (!destino) return;
+  e.preventDefault();
+  desplazarA(destino);
+  history.replaceState(null, "", a.getAttribute("href"));
+}));
 
-anterior.addEventListener("click", () => desplazar(-1));
-siguiente.addEventListener("click", () => desplazar(1));
-pista.addEventListener("scroll", actualizarFlechas, { passive: true });
-new ResizeObserver(actualizarFlechas).observe(pista);
+window.addEventListener("scroll", marcarSeccion, { passive: true });
+
+/* Pie */
+const ultimaFecha = proyectos.length ? fechaLegible(proyectos[0].fecha) : "";
+if (ultimaFecha) document.getElementById("actualizado").textContent = "Última actualización: " + ultimaFecha + ".";
 
 /* Inicio */
-pintarIntegrantes();
-actualizarFlechas();
-pintarGlosario();
+pintarProyectos();
+pintarFiltrosProyectos();
 pintarVideos();
-pintarFiltros();
-pintarLista();
+pintarFiltrosVideos();
+pintarGlosario();
+pintarIntegrantes();
+aplicarFiltros();
+actualizarFlechas();
+marcarSeccion();
 dibujarRed();
 new ResizeObserver(dibujarRed).observe(contenedorRed);
+new ResizeObserver(actualizarFlechas).observe(pista);
 requestAnimationFrame(animar);
 </script>
 </body>
